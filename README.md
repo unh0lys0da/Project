@@ -4,4 +4,4 @@ Bij deze een simpele tutorial over GIT:
 -Op Linux:<br />
 <code>sudo apt-get install git</code><br />
 -Op Windows / MacOS:<br />
-Ga naar git-scm.com en volg de instructies van die site.
+Download git <a href="https://git-scm.com/">hier</a> en installeer het programma.
