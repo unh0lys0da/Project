@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 
 import com.github.mikephil.charting.charts.PieChart;
@@ -27,9 +28,16 @@ public class MainActivity extends AppCompatActivity {
     public PieChart pieChartInkomsten;
     public PieChart pieChartUitgaven;
     private ArrayList<Integer> colors;
+    private DisplayMetrics metrics;
+    private int screenWidth;
+    private int screenHeight;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        screenWidth = metrics.widthPixels;
+        screenHeight = metrics.heightPixels;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
