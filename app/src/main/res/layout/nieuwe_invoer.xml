@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <ToggleButton
+        android:id="@+id/inUitToggle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:checked="true"
+        android:text="Uitgave"
+        android:textOff="Uitgave"
+        android:textOn="Inkomen" />
+
+    <EditText
+        android:id="@+id/bedragText"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/inUitToggle"
+        android:layout_marginStart="47dp"
+        android:layout_marginTop="36dp"
+        android:ems="10"
+        android:text="Bedrag :" />
+
+    <EditText
+        android:id="@+id/datumText"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/bedragText"
+        android:layout_below="@+id/bedragText"
+        android:layout_marginTop="13dp"
+        android:ems="10"
+        android:text=" Datum :" />
+
+    <EditText
+        android:id="@+id/bedragInput"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/bedragText"
+        android:layout_alignBottom="@+id/bedragText"
+        android:layout_marginStart="15dp"
+        android:layout_toEndOf="@+id/bedragText"
+        android:ems="10"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/datumInput"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="date"
+        android:layout_alignBaseline="@+id/datumText"
+        android:layout_alignBottom="@+id/datumText"
+        android:layout_alignStart="@+id/bedragInput" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="41dp"
+        android:layout_below="@+id/datumInput"
+        android:layout_alignStart="@+id/datumInput" />
+
+    <EditText
+        android:id="@+id/categorieText"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/datumText"
+        android:layout_alignTop="@+id/spinner"
+        android:ems="10"
+        android:text="Categorie:" />
+
+    <CheckBox
+        android:id="@+id/herhaaldCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Herhaald"
+        android:layout_marginTop="41dp"
+        android:layout_below="@+id/opdeelCheck"
+        android:layout_toStartOf="@+id/spinner" />
+
+    <CheckBox
+        android:id="@+id/dagCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/elkeText"
+        android:layout_marginStart="16dp"
+        android:layout_toEndOf="@+id/elkeText"
+        android:text="Dag" />
+
+    <EditText
+        android:id="@+id/elkeText"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/spinner"
+        android:layout_alignTop="@+id/herhaaldCheck"
+        android:layout_marginStart="38dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Elke:"
+        android:textSize="14sp" />
+
+    <CheckBox
+        android:id="@+id/weekCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:duplicateParentState="false"
+        android:text="Week"
+        android:layout_below="@+id/dagCheck"
+        android:layout_alignStart="@+id/dagCheck" />
+
+    <CheckBox
+        android:id="@+id/maandCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Maand"
+        android:layout_below="@+id/weekCheck"
+        android:layout_alignStart="@+id/weekCheck" />
+
+    <CheckBox
+        android:id="@+id/opdeelCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="bedrag opdelen in meer dan 1 categorie "
+        android:layout_marginTop="17dp"
+        android:layout_below="@+id/categorieText"
+        android:layout_alignStart="@+id/datumText" />
+
+</RelativeLayout>
