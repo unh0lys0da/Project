@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         screenWidth = metrics.widthPixels;
         screenHeight = metrics.heightPixels;
@@ -92,6 +93,13 @@ public class MainActivity extends AppCompatActivity {
     private void setUpCharts() {
         pieChartInkomsten = (PieChart) findViewById(R.id.PieChartLinks);
         pieChartUitgaven = (PieChart) findViewById(R.id.PieChartRechts);
+
+        pieChartInkomsten.setMinimumHeight(screenWidth/2);
+        pieChartInkomsten.setMinimumWidth(screenWidth/2);
+
+        pieChartUitgaven.setMinimumHeight(screenWidth/2);
+        pieChartUitgaven.setMinimumWidth(screenWidth/2);
+
 
         Description descInkomsten = new Description();
         Description descUitgaven = new Description(); //Maak de descriptions eerst zo aan
