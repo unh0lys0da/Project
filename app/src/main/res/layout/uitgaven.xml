@@ -20,7 +20,7 @@
         android:text="Settings" />
 
     <Button
-        android:id="@+id/inkomstenLijstButton"
+        android:id="@+id/uitgavenLijstButton"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:layout_alignParentBottom="true"
