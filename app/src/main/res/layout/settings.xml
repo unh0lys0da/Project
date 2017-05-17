@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="rnd.project.MainActivity">
+
+    <Button
+        android:id="@+id/homeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Home" />
+
+    <Button
+        android:id="@+id/categorieButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:text="Categorie Manager"
+        android:layout_below="@+id/homeButton"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/mutatieButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Periodieke Mutaties"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/categorieButton"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/bewerkenButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Maand Bewerken"
+        android:layout_marginTop="14dp"
+        android:layout_below="@+id/mutatieButton"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/exportButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Maand Exporteren"
+        android:layout_marginTop="19dp"
+        android:layout_below="@+id/bewerkenButton"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
