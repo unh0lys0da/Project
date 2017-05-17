@@ -12,14 +12,8 @@
         android:layout_height="wrap_content"
         android:text="+ Nieuwe Invoer +"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:id="@+id/maandenButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/invoerButton"
-        android:text="Maanden" />
+        android:layout_centerHorizontal="true"
+        android:onClick="gotoNieuweInvoer" />
 
     <Button
         android:id="@+id/settingsButton"
@@ -27,14 +21,16 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/invoerButton"
         android:layout_alignParentEnd="true"
-        android:text="Settings" />
+        android:text="Settings"
+        android:onClick="gotoSettings" />
 
     <Button
         android:id="@+id/lijstButton"
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="gotoLijst"/>
 
     <Button
         android:id="@+id/uitgavenButton"
@@ -42,13 +38,25 @@
         android:layout_height="180dp"
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/invoerButton"
-        android:background="match_parent" />
+        android:background="match_parent"
+        android:onClick="gotoUitgaven"/>
 
     <Button
         android:id="@+id/inkomstenButton"
         android:layout_width="180dp"
         android:layout_height="180dp"
         android:layout_below="@+id/invoerButton"
-        android:background="match_parent" />
+        android:background="match_parent"
+        android:onClick="gotoInkomsten"/>
+
+    <ScrollView
+        android:id="@+id/maandenScroll"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_above="@+id/inkomstenButton"
+        android:layout_alignParentStart="true"
+        android:fillViewport="true"
+        android:scrollbarStyle="insideOverlay">
+    </ScrollView>
 
 </RelativeLayout>

@@ -10,7 +10,8 @@
         android:id="@+id/homeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Home" />
+        android:text="Home"
+        android:onClick="gotoHome" />
 
     <Button
         android:id="@+id/categorieButton"
