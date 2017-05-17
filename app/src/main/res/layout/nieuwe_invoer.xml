@@ -92,7 +92,7 @@
         android:text="@string/Dag"
         android:layout_alignBaseline="@+id/elkeText"
         android:layout_alignBottom="@+id/elkeText"
-        android:layout_alignEnd="@+id/opdeelCheck" />
+        android:layout_toEndOf="@+id/herhaaldCheck" />
 
     <TextView
         android:id="@+id/elkeText"
@@ -102,9 +102,10 @@
         android:inputType="textPersonName"
         android:text="@string/Elke"
         android:textSize="24sp"
-        android:layout_marginBottom="6dp"
-        android:layout_alignBottom="@+id/herhaaldCheck"
-        android:layout_toStartOf="@+id/dagCheck" />
+        android:layout_below="@+id/herhaaldCheck"
+        android:layout_alignStart="@+id/herhaaldCheck"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="18dp" />
 
     <CheckBox
         android:id="@+id/weekCheck"
