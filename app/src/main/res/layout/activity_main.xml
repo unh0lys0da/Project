@@ -4,14 +4,51 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="rnd.project.MainActivity">
 
-    <TextView
+    <Button
+        android:id="@+id/invoerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="+ Nieuwe Invoer +"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/maandenButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/invoerButton"
+        android:text="Maanden" />
+
+    <Button
+        android:id="@+id/settingsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/invoerButton"
+        android:layout_alignParentEnd="true"
+        android:text="Settings" />
+
+    <Button
+        android:id="@+id/lijstButton"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/uitgavenButton"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/invoerButton"
+        android:background="w" />
+
+    <Button
+        android:id="@+id/inkomstenButton"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_below="@+id/invoerButton"
+        android:background="w" />
+
 </RelativeLayout>

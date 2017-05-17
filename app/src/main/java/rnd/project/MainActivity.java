@@ -12,5 +12,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Douwe is een flikkert.
-    //Tom mist zijn waifu
+    //klopt, groetjes rits
+    //test, groetjes Auke
+    //ook ff een test
 }
