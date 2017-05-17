@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        colors = new ArrayList<>();
         addColors();
         setUpCharts();
     }
@@ -81,8 +82,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpCharts() {
-        PieChart pieChartInkomsten = (PieChart) findViewById(R.id.PieChartLinks);
-        PieChart pieChartUitgaven = (PieChart) findViewById(R.id.PieChartRechts);
+        pieChartInkomsten = (PieChart) findViewById(R.id.PieChartLinks);
+        pieChartUitgaven = (PieChart) findViewById(R.id.PieChartRechts);
 
         Description descInkomsten = new Description();
         Description descUitgaven = new Description(); //Maak de descriptions eerst zo aan
