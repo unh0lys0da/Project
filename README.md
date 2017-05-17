@@ -12,7 +12,7 @@ Download git <a href="https://git-scm.com/">hier</a> en installeer het programma
 * *Check Project From Version Control -> Git -> Vul bij Git repository url in: https://github.com/unh0lys0da/Project -> Clone*
 4. Werken met Git
 -Er zijn velen mogelijkheden in git, maar de belangrijkste zijn: **commit**, **pull**, **merge** en **push**.<br />
-***commit**: Maak een snapshot van je huidige veranderingen en sla deze locaal op.*<br />
-***pull**: Haal veranderingen op die gemaakt zijn door anderen.*<br />
-***merge**: Verwerk review de opgehaalde veranderingen en bepaal of je zo wilt verwerken in je bestanden*.<br />
-***push**: Upload je commit (de veranderingen die je gemaakt hebt) naar de repository die online staat (deze dus)*.
+**commit**: *Maak een snapshot van je huidige veranderingen en sla deze locaal op.*<br />
+**pull**: *Haal veranderingen op die gemaakt zijn door anderen.*<br />
+**merge**: *Verwerk review de opgehaalde veranderingen en bepaal of je zo wilt verwerken in je bestanden*.<br />
+**push**: *Upload je commit (de veranderingen die je gemaakt hebt) naar de repository die online staat (deze dus)*.
