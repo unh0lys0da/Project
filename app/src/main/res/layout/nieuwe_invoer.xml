@@ -6,12 +6,13 @@
         android:id="@+id/inUitToggle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:checked="true"
         android:text="Uitgave"
         android:textOff="Uitgave"
-        android:textOn="Inkomen" />
+        android:textOn="Inkomen"
+        android:layout_marginTop="51dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:id="@+id/bedragText"
@@ -128,5 +129,14 @@
         android:layout_marginTop="17dp"
         android:layout_below="@+id/categorieText"
         android:layout_alignStart="@+id/datumText" />
+
+    <Button
+        android:id="@+id/homeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="Home"
+        android:onClick="gotoHome"/>
 
 </RelativeLayout>
