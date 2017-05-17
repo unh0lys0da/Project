@@ -1,3 +1,15 @@
 <resources>
-    <string name="app_name">Project</string>
+    <string name="app_name">Geld Manager</string>
+    <string name="Uitgave">Uitgave</string>
+    <string name="Inkomsten">Inkomsten</string>
+    <string name="Bedrag">Bedrag: </string>
+    <string name="Datum">Datum: </string>
+    <string name="Categorie">Categorie: </string>
+    <string name="Herhaald">Herhaald</string>
+    <string name="Dag">Dag</string>
+    <string name="Elke">Elke:</string>
+    <string name="Week">Week</string>
+    <string name="Maand">Maand</string>
+    <string name="Opdelen">Bedrag opdelen in meer dan 1 categorie</string>
+    <string name="Home">Home</string>
 </resources>
