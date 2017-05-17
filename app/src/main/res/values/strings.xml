@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Geld Manager</string>
-    <string name="Uitgave">Uitgave</string>
+    <string name="Uitgave">Uitgaven</string>
     <string name="Inkomsten">Inkomsten</string>
     <string name="Bedrag">Bedrag: </string>
     <string name="Datum">Datum: </string>
@@ -12,4 +12,11 @@
     <string name="Maand">Maand</string>
     <string name="Opdelen">Bedrag opdelen in meer dan 1 categorie</string>
     <string name="Home">Home</string>
+    <string name="settings">Settings</string>
+    <string name="lijst">Lijst</string>
+    <string name="invoer">Nieuwe Invoer</string>
+    <string name="cat_man">Categorie manager</string>
+    <string name="per_mut">Periodieke mutaties</string>
+    <string name="maand_bew">Maand bewerken</string>
+    <string name="maand_ex">Maand exporteren</string>
 </resources>

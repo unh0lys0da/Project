@@ -7,12 +7,23 @@
     android:weightSum="2"
     tools:context="rnd.project.MainActivity">
 
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:text="@string/Inkomsten"
+        android:textSize="32sp"
+        android:gravity="center"
+        android:layout_alignBottom="@+id/settingsButton"
+        android:layout_toStartOf="@+id/settingsButton"
+        android:layout_marginEnd="22dp" />
+
     <Button
         android:id="@+id/homeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="gotoHome"
-        android:text="Home" />
+        android:text="@string/Home" />
 
     <Button
         android:id="@+id/settingsButton"
@@ -20,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:onClick="gotoSettings"
-        android:text="Settings" />
+        android:text="@string/settings" />
 
     <ListView
         android:id="@+id/list"
