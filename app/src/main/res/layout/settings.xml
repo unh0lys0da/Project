@@ -15,7 +15,7 @@
 
     <Button
         android:id="@+id/categorieButton"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
         android:text="Categorie Manager"
@@ -24,28 +24,28 @@
 
     <Button
         android:id="@+id/mutatieButton"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="Periodieke Mutaties"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/categorieButton"
         android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/bewerkenButton"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="Maand Bewerken"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/mutatieButton"
         android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/exportButton"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="Maand Exporteren"
-        android:layout_marginTop="19dp"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/bewerkenButton"
         android:layout_centerHorizontal="true" />
 
