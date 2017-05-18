@@ -33,6 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="0dp"
+            android:onClick="gotoSettings"
             app:srcCompat="@android:drawable/ic_menu_manage" />
 
     </LinearLayout>
@@ -43,11 +44,13 @@
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/PieChartLinks"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:onClick="showBiggerLeftPie"/>
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/PieChartRechts"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:onClick="showBiggerRightPie"/>
 
         //GratisPushesAlsJeEvenComment
     </LinearLayout>

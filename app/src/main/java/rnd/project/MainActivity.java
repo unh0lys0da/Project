@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(lijst);
     }
 
-    public void gotoNieuweInvoer(View v){
+    public void addNewUserEntry(View v){
         Intent invoer;
         invoer = new Intent(getBaseContext(),InvoerActivity.class);
         startActivity(invoer);
@@ -88,6 +88,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void gotoHome(View v){
         setContentView(R.layout.lijst);
+    }
+
+    public void showBiggerLeftPie(View view) {
+        pieChartUitgaven.setVisibility(View.GONE);
+        pieChartInkomsten.setMinimumHeight((screenWidth * 3) / 4);
     }
 
     private void setUpCharts() {
