@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         colors.add(Color.CYAN);
         colors.add(Color.MAGENTA);
         //Zijn voorlopig maar 5 kleuren, kan altijd makkelijk meer doen, wil ook liever hex-based kleuren gaan gebruiken.
+        //RitsKanNietPullenLol
     }
 
     public void gotoInkomsten(View v){
