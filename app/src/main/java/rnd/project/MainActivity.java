@@ -1,11 +1,13 @@
 package rnd.project;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
@@ -15,10 +17,11 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
+    DatabaseHelper db;
     public List<Entry> entriesInkomsten; //DataSet voor Linker Grafiek
     public List<Entry> entriesUitgaven; //DataSet voor rechtergrafiek.
     String[] categoryInkomsten = {"Lening", "Ouders", "Werk", "etc"}; //TestSet
@@ -45,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
         colors = new ArrayList<>();
         addColors();
         setUpCharts();
+
+        db = new DatabaseHelper(this);
     }
 
     private void addColors() {
@@ -161,5 +166,46 @@ public class MainActivity extends AppCompatActivity {
         pieChartInkomsten.invalidate();
         pieChartUitgaven.invalidate();
 
+    }
+
+    //add given amount to database with current month + year
+    public void addValues (double bedrag, String inUit, String cat) {
+        Calendar cal = Calendar.getInstance();
+        int month = cal.get(Calendar.MONTH) + 1; //Increment with 1 so that e.g. January has index 1 instead of 0
+        int year = cal.get(Calendar.YEAR);
+        boolean insert = db.addAmount(bedrag, inUit, cat, month, year); //Add new values to database
+        if (insert) toastMessage("Insert correct");
+        else toastMessage("Insert went wrong");
+    }
+
+    //Read Bedrag and Catogorie column from database
+    public void readBedragCategorie (){
+        Cursor data = db.readBedragCat();
+        int saveBedrag = 0; //Index of the column in the select statement of the query; so not the index of the column in the table!
+        int saveCat = 1;
+        ArrayList<Double> bedragList = new ArrayList<>();
+        ArrayList<String> categorieList = new ArrayList<>();
+        while(data.moveToNext()) { //moves to next row in query
+            Double bedrag = data.getDouble(saveBedrag); // gets result from current in column saveBedrag
+            String categorie = data.getString(saveCat);
+            bedragList.add(bedrag);
+            categorieList.add(categorie);
+        }
+    }
+
+    //Read categorie column from database
+    public String readCategorie (){
+        Cursor data = db.readCat();
+        int ColumnToShow = 0;
+        if (data.moveToNext()) {
+            return data.getString(ColumnToShow);
+        }
+        else {
+            return "";
+        }
+    }
+
+    private void toastMessage (String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }
