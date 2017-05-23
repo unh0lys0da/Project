@@ -1,5 +1,6 @@
 package rnd.project;
 
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +29,9 @@ public class InkomstenActivity extends AppCompatActivity {
     private ArrayList<Integer> colors;
     private int screenWidth;
     private DisplayMetrics metrics;
+    public List<Double> bedragList;
+    public List<String> categorieList;
+
 
 
     @Override
@@ -38,6 +42,8 @@ public class InkomstenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.inkomsten);
 
+        db = new DatabaseHelper(this);
+        readInkomsten();
 
         colors = new ArrayList<>();
         addColors();
@@ -100,5 +106,21 @@ public class InkomstenActivity extends AppCompatActivity {
         colors.add(Color.CYAN);
         colors.add(Color.MAGENTA);
         //Zijn voorlopig maar 5 kleuren, kan altijd makkelijk meer doen, wil ook liever hex-based kleuren gaan gebruiken.
+    }
+
+    //Gets Bedrag per Categorie for all uitgaven
+    private void readInkomsten () {
+        Cursor data = db.getUitIn("in");
+        int saveBedrag = 0; //Index of the column in the select statement of the query; so not the index of the column in the table!
+        int saveCat = 1;
+        bedragList = new ArrayList<>();
+        categorieList = new ArrayList<>();
+
+        while(data.moveToNext()) { //moves to next row in query
+            Double bedrag = data.getDouble(saveBedrag); // gets result from current in column saveBedrag
+            String categorie = data.getString(saveCat);
+            bedragList.add(bedrag);
+            categorieList.add(categorie);
+        }
     }
 }
