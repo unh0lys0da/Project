@@ -20,7 +20,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     //Gets all values in database for given month
-    private void readMonth (int month) {
-        Cursor data = db.getMaand(month);
+    private void readMonth (int month, int year) {
+        Cursor data = db.getMaand(month, year);
     }
 }

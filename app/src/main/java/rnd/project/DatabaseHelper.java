@@ -66,23 +66,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         else return true; //Adding row succeeded
     }
 
-    //Returns cursor with all columns for given month
-    public Cursor getMaand(int month) {
-            SQLiteDatabase db = this.getReadableDatabase();
-            String[] projection = {
-                    "*"
-            };
-            String selection = COLUMN_5_MAAND + " = ?";
-            String[] selectionArgs = { String.valueOf(month) };
-            Cursor data = db.query(
-                TABLE_NAME,
-                projection,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                null
-        );
+    //Returns cursor with all columns for given month in year
+    public Cursor getMaand(int month, int year) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String maand = String.valueOf(month);
+        String jaar = String.valueOf(year);
+        Cursor data = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_5_MAAND + " = \"" + maand + "\" AND " +
+                COLUMN_4_JAAR + " = \"" + jaar + "\"", null);
         return data;
     }
 
