@@ -13,8 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:id="@+id/linearLayout">
-
-        //Spinner om een maand te selecteren?
+        //Spinner voor het selecteren van maand
         <Spinner
             android:id="@+id/month_spinner"
             android:layout_width="wrap_content"
@@ -35,12 +34,12 @@
             android:id="@+id/imageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="0dp"
+            android:layout_marginEnd="0dp"
             android:onClick="gotoSettings"
             app:srcCompat="@android:drawable/ic_menu_manage" />
 
     </LinearLayout>
-
+    //Layout voor de taartdiagrammen
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

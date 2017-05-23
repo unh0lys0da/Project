@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
-
+    //Textview voor "Lijst"
     <TextView
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:text="@string/lijst"
         android:textSize="32sp"
         android:gravity="center"
-        android:layout_marginEnd="22dp"
         android:id="@+id/textView"
-        android:layout_alignBottom="@+id/settingsButton"
-        android:layout_toStartOf="@+id/settingsButton" />
-
+        android:layout_alignBottom="@+id/homeButton"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="11dp"
+        android:layout_alignParentTop="true" />
+    //Home button
     <Button
         android:id="@+id/homeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Home"
         android:onClick="gotoHome" />
-
+    //Settings button
     <Button
         android:id="@+id/settingsButton"
         android:layout_width="wrap_content"
@@ -28,20 +29,17 @@
         android:layout_alignParentEnd="true"
         android:text="@string/settings"
         android:onClick="gotoSettings" />
-
-    <RelativeLayout
+    //Lijst voor inkomsten en uitgaven
+    <ListView
+        android:id="@android:id/list"
         android:layout_width="match_parent"
-        android:layout_height="550dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true">
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/textView">
+    </ListView>
 
-        <ListView
-            android:id="@android:id/list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </ListView>
 
-    </RelativeLayout>
 
 </RelativeLayout>
 

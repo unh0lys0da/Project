@@ -19,4 +19,5 @@
     <string name="per_mut">Periodieke mutaties</string>
     <string name="maand_bew">Maand bewerken</string>
     <string name="maand_ex">Maand exporteren</string>
+    <string name="submitbtn">Submit</string>
 </resources>
