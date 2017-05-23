@@ -9,6 +9,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements OnItemSelectedListener {
     DatabaseHelper db;
     public PieChart pieChartInkomsten;
     public PieChart pieChartUitgaven;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public List<String> categorieListInkomst;
     public List<PieEntry> bedragListUitgave;
     public List<String> categorieListUitgave;
+    private Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +48,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         db = new DatabaseHelper(this);
 
+        // Moest even om de spinner te checken
         db.addAmount(12.0, "uit", "overig", 1995, 3);
         db.addAmount(15.0, "uit", "overig", 1997, 5);
         Cursor mndJaar = db.getMaandJaar();
-        Spinner spinner = (Spinner) findViewById(R.id.month_spinner);
+        spinner = (Spinner) findViewById(R.id.month_spinner);
 
         makeSpinner(spinner,mndJaar);
 
@@ -103,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mndJaarArray);
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spinnerArrayAdapter);
+        spinner.setOnItemSelectedListener(this);
     }
 
     private void addColors() {
@@ -143,6 +147,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Intent settings;
         settings = new Intent(getBaseContext(),SettingsActivity.class);
         startActivity(settings);
+    }
+
+    public void gotoHome(View v){
+        setContentView(R.layout.lijst);
     }
 
     public void showBiggerLeftPie(View view) {
@@ -255,9 +263,46 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
+    private class MonthYear {
+        private int month, year;
+        public MonthYear(int month, int year) {
+            this.month = month;
+            this.year = year;
+        }
+        public int getMonth() {
+            return month;
+        }
+        public int getYear() {
+            return year;
+        }
+
+        public void setMonth(int month) {
+            this.month = month;
+        }
+
+        public void setYear(int year) {
+            this.year = year;
+        }
+
+    }
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        Log.d("Hello","hello");
+        String itemSelected = (String) parent.getItemAtPosition(position);
+        MonthYear my = new MonthYear(0, 0);
+        parseMonthYearFromString(my,itemSelected);
+    }
 
+    private void parseMonthYearFromString(MonthYear my, String toParse) {
+        String[] results = toParse.split(" ");
+        System.out.println(results[0]);
+        System.out.println(results[1]);
+        for(int i=0;i<MONTHS.length;i++) {
+            if(results[0].equals(MONTHS[i]))
+                my.setMonth(i + 1);
+
+        }
+        my.setYear(Integer.parseInt(results[1]));
     }
 
     @Override
