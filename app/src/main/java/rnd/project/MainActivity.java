@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -75,7 +76,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void makeSpinner(Spinner spinner, Cursor mndJaar) {
-
+        String[] mndJaarArray = new String[mndJaar.getCount()];
+        for(int i=0; mndJaar.moveToNext(); i++) {
+            mndJaarArray[i] = mndJaar.getString(0) + " " + mndJaar.getString(1);
+        }
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mndJaarArray);
+        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(spinnerArrayAdapter);
     }
 
     private void addColors() {
