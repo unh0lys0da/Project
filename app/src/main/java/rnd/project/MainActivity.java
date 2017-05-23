@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
@@ -44,12 +45,15 @@ public class MainActivity extends AppCompatActivity {
         screenHeight = metrics.heightPixels;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        db = new DatabaseHelper(getApplicationContext());
+        Cursor mndJaar = db.getMaandJaar();
+        Spinner spinner = (Spinner) findViewById(R.id.month_spinner);
+
 
         colors = new ArrayList<>();
         addColors();
         setUpCharts();
 
-        db = new DatabaseHelper(this);
         db.addAmount(12.0, "uit", "overig", 1990, 2);
         db.addAmount(23.0, "uit", "overig", 1990, 2);
         db.addAmount(1.0, "uit", "Nog een", 1990, 2);
