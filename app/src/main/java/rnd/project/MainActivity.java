@@ -6,7 +6,9 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -22,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     DatabaseHelper db;
     public PieChart pieChartInkomsten;
     public PieChart pieChartUitgaven;
@@ -43,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         db = new DatabaseHelper(this);
+
+        db.addAmount(12.0, "uit", "overig", 1995, 3);
+        db.addAmount(15.0, "uit", "overig", 1997, 5);
         Cursor mndJaar = db.getMaandJaar();
         Spinner spinner = (Spinner) findViewById(R.id.month_spinner);
 
@@ -71,14 +76,29 @@ public class MainActivity extends AppCompatActivity {
 
 
         setUpCharts();
-
-
     }
+
+    String[] MONTHS = {
+            "Januari",
+            "Februari",
+            "Maart",
+            "April",
+            "Mei",
+            "Juni",
+            "Juli",
+            "Augustus",
+            "September",
+            "Oktober",
+            "November",
+            "December"
+    };
 
     private void makeSpinner(Spinner spinner, Cursor mndJaar) {
         String[] mndJaarArray = new String[mndJaar.getCount()];
+        Log.d("first","" + mndJaar.getCount());
         for(int i=0; mndJaar.moveToNext(); i++) {
-            mndJaarArray[i] = mndJaar.getString(0) + " " + mndJaar.getString(1);
+            mndJaarArray[i] = MONTHS[mndJaar.getInt(0) + 1] + " " + mndJaar.getString(1);
+            Log.d("mndjaar",mndJaar.getString(0) + "," + mndJaar.getString(1));
         }
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mndJaarArray);
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -237,5 +257,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void toastMessage (String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
