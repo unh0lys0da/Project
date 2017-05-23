@@ -76,6 +76,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return data;
     }
 
+    public Cursor getMaandJaar() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor data = db.rawQuery("SELECT DISTINCT " + COLUMN_5_MAAND + "," + COLUMN_4_JAAR + " FROM " + TABLE_NAME + " ORDER BY " + COLUMN_4_JAAR, null);
+        return data;
+    }
     //Returns cursor with sum of bedrag and categorie for all inkomsten or uitgaven
     public Cursor getUitIn(String uitIn) {
         SQLiteDatabase db = this.getReadableDatabase();

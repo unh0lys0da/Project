@@ -14,12 +14,14 @@
         android:orientation="horizontal"
         android:id="@+id/linearLayout">
 
+        //Spinner om een maand te selecteren?
         <Spinner
             android:id="@+id/month_spinner"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             />
 
+        //Knop om nieuwe invoer te maken
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -28,6 +30,7 @@
             android:onClick="addNewUserEntry"
             android:text="@string/invoer" />
 
+        //Settings knop
         <ImageButton
             android:id="@+id/imageButton"
             android:layout_width="wrap_content"
@@ -44,6 +47,7 @@
         android:layout_below="@+id/linearLayout"
         android:layout_alignParentStart="true">
 
+        //Linker en rechter piechart
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/PieChartLinks"
             android:layout_width="wrap_content"
@@ -55,10 +59,9 @@
             android:layout_height="wrap_content"
             android:onClick="showBiggerRightPie"/>
 
-        //GratisPushesAlsJeEvenComment
-        //GewoonWeerFFCommentsVoorRits
     </LinearLayout>
 
+    //De lijst van afschrijvingen etc.
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
