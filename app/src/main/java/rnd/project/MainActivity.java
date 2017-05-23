@@ -50,6 +50,15 @@ public class MainActivity extends AppCompatActivity {
         setUpCharts();
 
         db = new DatabaseHelper(this);
+        db.addAmount(12.0, "uit", "overig", 1990, 2);
+        db.addAmount(23.0, "uit", "overig", 1990, 2);
+        db.addAmount(1.0, "uit", "Nog een", 1990, 2);
+        db.addAmount(12.0, "in", "overig", 1990, 2);
+        db.addAmount(23.0, "in", "overig", 1990, 2);
+        db.addAmount(1.0, "in", "Nog een", 1990, 2);
+        //readUitIn("uit");
+        readUitIn("in");
+        //whereT();
     }
 
     private void addColors() {
@@ -165,22 +174,11 @@ public class MainActivity extends AppCompatActivity {
         //Invalidate de charts
         pieChartInkomsten.invalidate();
         pieChartUitgaven.invalidate();
-
     }
 
-    //add given amount to database with current month + year
-    public void addValues (double bedrag, String inUit, String cat) {
-        Calendar cal = Calendar.getInstance();
-        int month = cal.get(Calendar.MONTH) + 1; //Increment with 1 so that e.g. January has index 1 instead of 0
-        int year = cal.get(Calendar.YEAR);
-        boolean insert = db.addAmount(bedrag, inUit, cat, month, year); //Add new values to database
-        if (insert) toastMessage("Insert correct");
-        else toastMessage("Insert went wrong");
-    }
-
-    //Read Bedrag and Catogorie column from database
-    public void readBedragCategorie (){
-        Cursor data = db.readBedragCat();
+    //Gets sum of bedrag and categorie from database for uitgaven or inkomsten
+    private void readUitIn (String uitIn) {
+        Cursor data = db.getUitIn(uitIn);
         int saveBedrag = 0; //Index of the column in the select statement of the query; so not the index of the column in the table!
         int saveCat = 1;
         ArrayList<Double> bedragList = new ArrayList<>();
@@ -188,20 +186,10 @@ public class MainActivity extends AppCompatActivity {
         while(data.moveToNext()) { //moves to next row in query
             Double bedrag = data.getDouble(saveBedrag); // gets result from current in column saveBedrag
             String categorie = data.getString(saveCat);
+            toastMessage(String.valueOf(bedrag));
+            toastMessage(categorie);
             bedragList.add(bedrag);
             categorieList.add(categorie);
-        }
-    }
-
-    //Read categorie column from database
-    public String readCategorie (){
-        Cursor data = db.readCat();
-        int ColumnToShow = 0;
-        if (data.moveToNext()) {
-            return data.getString(ColumnToShow);
-        }
-        else {
-            return "";
         }
     }
 

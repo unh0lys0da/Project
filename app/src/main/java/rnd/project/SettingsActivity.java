@@ -17,10 +17,10 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
         db = new DatabaseHelper(this);
-        readMonth(1);
     }
 
+    //Gets all values in database for given month
     private void readMonth (int month) {
-        Cursor data = db.readMaand(month);
+        Cursor data = db.getMaand(month);
     }
 }

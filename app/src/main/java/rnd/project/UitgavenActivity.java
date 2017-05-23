@@ -17,10 +17,8 @@ public class UitgavenActivity extends AppCompatActivity {
         db = new DatabaseHelper(this);
     }
 
+    //Gets Bedrag per Categorie for all uitgaven
     private void readUitgaven () {
-        Cursor data = db.readUitIn("uit");
+        Cursor data = db.getUitIn("uit");
     }
-
-
-
 }
