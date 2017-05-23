@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
 
         // Moest even om de spinner te checken
         db.addAmount(12.0, "uit", "overig", 1995, 3);
+        db.addAmount(40.0, "uit", "overig", 1995, 3);
+        db.addAmount(50.0, "uit", "kaas", 1995, 3);
         db.addAmount(15.0, "uit", "overig", 1997, 5);
         Cursor mndJaar = db.getMaandJaar();
         spinner = (Spinner) findViewById(R.id.month_spinner);
@@ -291,6 +293,7 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         String itemSelected = (String) parent.getItemAtPosition(position);
         MonthYear my = new MonthYear(0, 0);
         parseMonthYearFromString(my,itemSelected);
+
     }
 
     private void parseMonthYearFromString(MonthYear my, String toParse) {
@@ -303,6 +306,26 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
 
         }
         my.setYear(Integer.parseInt(results[1]));
+        //bedragListInkomst.clear();
+        //categorieListInkomst.clear();
+        //bedragListUitgave.clear();
+        //categorieListUitgave.clear();
+        readUitInMonthYear("in", bedragListInkomst, categorieListInkomst, my.getMonth(), my.getYear());
+        readUitInMonthYear("uit", bedragListUitgave, categorieListUitgave, my.getMonth(), my.getYear());
+        fillCharts2();
+    }
+
+    //Gets sum of bedrag and categorie from database for uitgaven or inkomsten
+    private void readUitInMonthYear(String uitIn, List<PieEntry> bedrag, List<String> categorie, int month, int year) {
+        Cursor data = db.getUitInMonthYear(uitIn, month, year);
+        int saveBedrag = 0; //Index of the column in the select statement of the query; so not the index of the column in the table!
+        int saveCat = 1;
+        while(data.moveToNext()) { //moves to next row in query
+            Float tempBedrag = data.getFloat(saveBedrag); // gets result from current in column saveBedrag
+            String tempCategorie = data.getString(saveCat);
+            bedrag.add(new PieEntry(tempBedrag));
+            categorie.add(tempCategorie);
+        }
     }
 
     @Override

@@ -88,4 +88,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_2_UITOFIN + " = \"" + uitIn + "\" GROUP BY " + COLUMN_3_CATEGORIE, null);
         return data;
     }
+
+    public Cursor getUitInMonthYear(String uitIn, int month, int year) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT sum(" + COLUMN_1_BEDRAG + "), " + COLUMN_3_CATEGORIE + " FROM " + TABLE_NAME + " WHERE "
+                + COLUMN_2_UITOFIN + " = \"" + uitIn + "\"" + " AND " + COLUMN_5_MAAND + " = " + month + " AND " + COLUMN_4_JAAR + " = " + year +  " GROUP BY " + COLUMN_3_CATEGORIE;
+        Cursor data = db.rawQuery("SELECT sum(" + COLUMN_1_BEDRAG + "), " + COLUMN_3_CATEGORIE + " FROM " + TABLE_NAME + " WHERE "
+                + COLUMN_2_UITOFIN + " = \"" + uitIn + "\"" + " AND " + COLUMN_5_MAAND + " = " + month + " AND " + COLUMN_4_JAAR + " = " + year +  " GROUP BY " + COLUMN_3_CATEGORIE, null);
+        System.out.println(query);
+        return data;
+    }
 }
