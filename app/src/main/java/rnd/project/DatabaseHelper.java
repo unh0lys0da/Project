@@ -88,4 +88,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         );
         return data;
     }
+
+    public Cursor readMaand(int month) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] projection = {
+                "*"
+        };
+        String selection = COLUMN_5_MAAND + " = ?";
+        String[] selectionArgs = { String.valueOf(month) };
+        Cursor data = db.query(
+                TABLE_NAME,                    // The table to query
+                projection,                    // The columns to return
+                selection,                          // The columns for the WHERE clause
+                selectionArgs,                          // The values for the WHERE clause
+                null,                          // don't group the rows
+                null,                          // don't filter by row groups
+                null                           // The sort order
+        );
+        return data;
+    }
 }
