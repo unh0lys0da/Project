@@ -34,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private DisplayMetrics metrics;
     private int screenWidth;
     private int screenHeight;
-
+    public List<Double> bedragList;
+    public List<String> categorieList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,8 +182,8 @@ public class MainActivity extends AppCompatActivity {
         Cursor data = db.getUitIn(uitIn);
         int saveBedrag = 0; //Index of the column in the select statement of the query; so not the index of the column in the table!
         int saveCat = 1;
-        ArrayList<Double> bedragList = new ArrayList<>();
-        ArrayList<String> categorieList = new ArrayList<>();
+        categorieList = new ArrayList<>();
+        bedragList = new ArrayList<>();
         while(data.moveToNext()) { //moves to next row in query
             Double bedrag = data.getDouble(saveBedrag); // gets result from current in column saveBedrag
             String categorie = data.getString(saveCat);
