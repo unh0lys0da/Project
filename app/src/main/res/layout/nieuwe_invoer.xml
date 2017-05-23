@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
-
+    //ToggleButton voor inkomsten/uitgaven
     <ToggleButton
         android:id="@+id/inUitToggle"
         android:layout_width="300dp"
         android:layout_height="match_parent"
         android:checked="true"
-        android:text="@string/Uitgave"
+        android:text= "@string/Uitgave"
         android:textOff="@string/Uitgave"
         android:textOn="@string/Inkomsten"
         android:layout_alignBottom="@+id/homeButton"
         android:layout_alignParentEnd="true"
         android:layout_toEndOf="@+id/homeButton" />
-
+    //Textview voor "Bedrag:"
     <TextView
         android:id="@+id/bedragText"
         android:layout_width="110dp"
@@ -25,7 +25,7 @@
         android:ems="10"
         android:text="@string/Bedrag"
         android:textSize="24sp"/>
-
+    //Textview voor "Datum:"
     <TextView
         android:id="@+id/datumText"
         android:layout_width="110dp"
@@ -36,10 +36,10 @@
         android:textSize="24sp"
         android:layout_below="@+id/bedragInput"
         android:layout_toStartOf="@+id/bedragInput" />
-
+    //inputveld voor Bedrag
     <EditText
         android:id="@+id/bedragInput"
-        android:layout_width="210dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/bedragText"
         android:layout_alignBottom="@+id/bedragText"
@@ -47,35 +47,35 @@
         android:layout_toEndOf="@+id/bedragText"
         android:ems="10"
         android:inputType="numberDecimal" />
-
+    //inputveld voor Datum
     <EditText
         android:id="@+id/datumInput"
-        android:layout_width="210dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="date"
         android:layout_alignBaseline="@+id/datumText"
         android:layout_alignBottom="@+id/datumText"
         android:layout_alignStart="@+id/bedragInput" />
-
+    //spinner voor het kiezen van categorie
     <Spinner
         android:id="@+id/spinner"
-        android:layout_width="210dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="41dp"
+        android:layout_marginTop="42dp"
         android:layout_below="@+id/datumInput"
         android:layout_alignStart="@+id/datumInput" />
-
+    //Textview voor "categorie"
     <TextView
         android:id="@+id/categorieText"
-        android:layout_width="110dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/datumText"
-        android:layout_alignTop="@+id/spinner"
         android:ems="10"
         android:text="@string/Categorie"
-        android:textSize="24sp"/>
-
+        android:textSize="24sp"
+        android:layout_above="@+id/opdeelCheck"
+        android:layout_alignStart="@+id/datumText" />
+    //checkbox voor "Herhaald"
     <CheckBox
         android:id="@+id/herhaaldCheck"
         android:layout_width="wrap_content"
@@ -84,7 +84,7 @@
         android:layout_marginTop="42dp"
         android:layout_below="@+id/opdeelCheck"
         android:layout_alignStart="@+id/opdeelCheck" />
-
+    //checkbox voor "Dag"
     <CheckBox
         android:id="@+id/dagCheck"
         android:layout_width="wrap_content"
@@ -93,20 +93,19 @@
         android:layout_alignBaseline="@+id/elkeText"
         android:layout_alignBottom="@+id/elkeText"
         android:layout_toEndOf="@+id/herhaaldCheck" />
-
+    //Textview voor "Elke:"
     <TextView
         android:id="@+id/elkeText"
-        android:layout_width="75dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
         android:text="@string/Elke"
         android:textSize="24sp"
         android:layout_below="@+id/herhaaldCheck"
         android:layout_alignStart="@+id/herhaaldCheck"
         android:layout_marginStart="7dp"
         android:layout_marginTop="18dp" />
-
+    //checkbox voor "week"
     <CheckBox
         android:id="@+id/weekCheck"
         android:layout_width="wrap_content"
@@ -116,7 +115,7 @@
         android:text="@string/Week"
         android:layout_below="@+id/dagCheck"
         android:layout_alignStart="@+id/dagCheck" />
-
+    //checkbox voor "maand"
     <CheckBox
         android:id="@+id/maandCheck"
         android:layout_width="wrap_content"
@@ -124,7 +123,7 @@
         android:text="@string/Maand"
         android:layout_below="@+id/weekCheck"
         android:layout_alignStart="@+id/weekCheck" />
-
+    //checkbox voor "Bedrag opdelen in meer dan 1 categorie"
     <CheckBox
         android:id="@+id/opdeelCheck"
         android:layout_width="wrap_content"
@@ -133,14 +132,24 @@
         android:layout_marginTop="7dp"
         android:layout_below="@+id/spinner"
         android:layout_alignStart="@+id/categorieText" />
-
+    //home button
     <Button
         android:id="@+id/homeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:text="@string/Home"
-        />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:onClick="gotoHome"/>
+    //submit button
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/submitbtn"
+        android:layout_marginTop="34dp"
+        android:textSize="24sp"
+        android:layout_below="@+id/maandCheck"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

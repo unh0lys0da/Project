@@ -9,15 +9,15 @@
 
     //Header
     <TextView
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:text="@string/Inkomsten"
         android:textSize="32sp"
         android:gravity="center"
-        android:layout_alignBottom="@+id/settingsButton"
-        android:layout_toStartOf="@+id/settingsButton"
-        android:layout_marginEnd="22dp" />
+        android:layout_above="@+id/pieChart"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="14dp" />
 
     //Home knop
     <Button
@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:onClick="showBiggerRightPie"
         android:layout_below="@+id/homeButton"
-        android:layout_alignParentLeft="true"/>
+        android:layout_alignParentStart="true"/>
 
 
     //Weergave lijst van inkomsten

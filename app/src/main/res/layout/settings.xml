@@ -5,16 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="rnd.project.MainActivity">
-
+    //Home button
     <Button
         android:id="@+id/homeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Home"
-        android:onClick="gotoHome" />
-
+        android:onClick="gotoHome"
+        />
+    //Textview voor "Settings"
     <TextView
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:text="@string/settings"
@@ -22,7 +23,7 @@
         android:gravity="center"
         android:layout_above="@+id/categorieButton"
         android:layout_centerHorizontal="true" />
-
+    //Categorie Manager button
     <Button
         android:id="@+id/categorieButton"
         android:layout_width="200dp"
@@ -32,7 +33,7 @@
         android:layout_below="@+id/homeButton"
         android:layout_centerHorizontal="true"
         android:textSize="18sp"/>
-
+    //Periodieke Mutaties button
     <Button
         android:id="@+id/mutatieButton"
         android:layout_width="200dp"
@@ -42,7 +43,7 @@
         android:layout_below="@+id/categorieButton"
         android:layout_centerHorizontal="true"
         android:textSize="18sp"/>
-
+    //Maand Bewerken button
     <Button
         android:id="@+id/bewerkenButton"
         android:layout_width="200dp"
@@ -52,7 +53,7 @@
         android:layout_below="@+id/mutatieButton"
         android:layout_centerHorizontal="true"
         android:textSize="18sp"/>
-
+    //Maand Exporteren button
     <Button
         android:id="@+id/exportButton"
         android:layout_width="200dp"

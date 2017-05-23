@@ -13,13 +13,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:id="@+id/linearLayout">
-
+        //Spinner voor het selecteren van maand
         <Spinner
             android:id="@+id/month_spinner"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             />
-
+        //Nieuwe invoer button
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -27,17 +27,17 @@
             android:layout_gravity="center"
             android:onClick="addNewUserEntry"
             android:text="@string/invoer" />
-
+        //Settings button
         <ImageButton
             android:id="@+id/imageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="0dp"
+            android:layout_marginEnd="0dp"
             android:onClick="gotoSettings"
             app:srcCompat="@android:drawable/ic_menu_manage" />
 
     </LinearLayout>
-
+    //Layout voor de taartdiagrammen
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,13 +58,14 @@
         //GratisPushesAlsJeEvenComment
         //GewoonWeerFFCommentsVoorRits
     </LinearLayout>
-
+    //Lijst voor inkomsten en uitgaven
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:background="@android:color/darker_gray" />
+        android:background="@android:color/darker_gray"
+        />
 
 </RelativeLayout>
