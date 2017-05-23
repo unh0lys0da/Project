@@ -26,12 +26,10 @@ import java.util.List;
 public class InkomstenActivity extends AppCompatActivity {
     DatabaseHelper db;
     public PieChart chart;
-    public List<Entry> categorie;
-    float[] Data; //Wat te doen aan onbepaalde lengte, initialiseren uit db?
     private ArrayList<Integer> colors;
     private int screenWidth;
     private DisplayMetrics metrics;
-    public List<Double> bedragList;
+    public List<PieEntry> bedragList;
     public List<String> categorieList;
 
 
@@ -44,6 +42,8 @@ public class InkomstenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.inkomsten);
 
+        bedragList = new ArrayList<>();
+        categorieList = new ArrayList<>();
         db = new DatabaseHelper(this);
         readInkomsten();
 
@@ -102,7 +102,7 @@ public class InkomstenActivity extends AppCompatActivity {
         //Hier moeten die ArrayLists gevuld worden vanuit de database.
         //yEntries = de bedragen, xEntries = de categorieen.
 
-        PieDataSet dataSet = new PieDataSet(yEntries, "Bedrag per categorie");
+        PieDataSet dataSet = new PieDataSet(bedragList, "Bedrag per categorie");
         dataSet.setSliceSpace(0);
         dataSet.setValueTextSize(14);
         dataSet.setColors(colors);
@@ -130,10 +130,10 @@ public class InkomstenActivity extends AppCompatActivity {
         categorieList = new ArrayList<>();
 
         while(data.moveToNext()) { //moves to next row in query
-            Double bedrag = data.getDouble(saveBedrag); // gets result from current in column saveBedrag
-            String categorie = data.getString(saveCat);
-            bedragList.add(bedrag);
-            categorieList.add(categorie);
+            Float tempBedrag = data.getFloat(saveBedrag); // gets result from current in column saveBedrag
+            String tempCategorie = data.getString(saveCat);
+            bedragList.add(new PieEntry(tempBedrag));
+            categorieList.add(tempCategorie);
         }
     }
 }
