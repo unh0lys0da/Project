@@ -1,8 +1,10 @@
 package rnd.project;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Toast;
 
 /**
@@ -31,4 +33,11 @@ public class InvoerActivity extends AppCompatActivity {
     private void toastMessage (String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
+    //Gets user back to starting screen
+    public void gotoHome(View v) {
+        Intent home;
+        home = new Intent(getBaseContext(),MainActivity.class);
+        startActivity(home);
+    }
+    //submit button moet nog werkend worden.
 }

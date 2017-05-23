@@ -92,10 +92,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(settings);
     }
 
-    public void gotoHome(View v){
-        setContentView(R.layout.lijst);
-    }
-
     public void showBiggerLeftPie(View view) {
         pieChartUitgaven.setVisibility(View.GONE);
         pieChartInkomsten.setMinimumHeight((screenWidth * 3) / 4);
