@@ -186,8 +186,6 @@ public class MainActivity extends AppCompatActivity {
         while(data.moveToNext()) { //moves to next row in query
             Double bedrag = data.getDouble(saveBedrag); // gets result from current in column saveBedrag
             String categorie = data.getString(saveCat);
-            toastMessage(String.valueOf(bedrag));
-            toastMessage(categorie);
             bedragList.add(bedrag);
             categorieList.add(categorie);
         }
