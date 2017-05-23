@@ -1,5 +1,6 @@
 package rnd.project;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -8,10 +9,18 @@ import android.support.v7.app.AppCompatActivity;
  */
 
 public class UitgavenActivity extends AppCompatActivity {
-
+    DatabaseHelper db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.uitgaven);
+        db = new DatabaseHelper(this);
     }
+
+    private void readUitgaven () {
+        Cursor data = db.readUitIn("uit");
+    }
+
+
+
 }

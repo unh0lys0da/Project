@@ -97,13 +97,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selection = COLUMN_5_MAAND + " = ?";
         String[] selectionArgs = { String.valueOf(month) };
         Cursor data = db.query(
-                TABLE_NAME,                    // The table to query
-                projection,                    // The columns to return
-                selection,                          // The columns for the WHERE clause
-                selectionArgs,                          // The values for the WHERE clause
-                null,                          // don't group the rows
-                null,                          // don't filter by row groups
-                null                           // The sort order
+                TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+        return data;
+    }
+
+    public Cursor readUitIn(String uitIn) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] projection = {
+                COLUMN_1_BEDRAG,
+                COLUMN_3_CATEGORIE
+        };
+        String selection = COLUMN_2_UITOFIN + " = ?";
+        String[] selectionArgs = { uitIn };
+        Cursor data = db.query(
+                TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
         );
         return data;
     }
