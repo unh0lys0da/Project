@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
@@ -22,34 +24,65 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     DatabaseHelper db;
-    public List<Entry> entriesInkomsten; //DataSet voor Linker Grafiek
-    public List<Entry> entriesUitgaven; //DataSet voor rechtergrafiek.
-    String[] categoryInkomsten = {"Lening", "Ouders", "Werk", "etc"}; //TestSet
-    String[] categoryUitgaven = {"Eten", "Uitgaan", "Huur", "etc"}; //TestSet
-    float[] inkomstenData = {400, 200, 300, 20}; //TestSet
-    float[] uitgavenData = {200, 100, 300, 50}; //TestSet
     public PieChart pieChartInkomsten;
     public PieChart pieChartUitgaven;
     private ArrayList<Integer> colors;
     private DisplayMetrics metrics;
     private int screenWidth;
-    private int screenHeight;
-
+    public List<PieEntry> bedragListInkomst;
+    public List<String> categorieListInkomst;
+    public List<PieEntry> bedragListUitgave;
+    public List<String> categorieListUitgave;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         screenWidth = metrics.widthPixels;
-        screenHeight = metrics.heightPixels;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        db = new DatabaseHelper(this);
+        Cursor mndJaar = db.getMaandJaar();
+        Spinner spinner = (Spinner) findViewById(R.id.month_spinner);
+
+        makeSpinner(spinner,mndJaar);
+
         colors = new ArrayList<>();
+        bedragListInkomst = new ArrayList<>();
+        categorieListInkomst = new ArrayList<>();
+        bedragListUitgave = new ArrayList<>();
+        categorieListUitgave = new ArrayList<>();
         addColors();
+
+        //Tijdelijke shit om db te vullen
+        db.addAmount(12.0, "uit", "overig", 1990, 2);
+        db.addAmount(23.0, "uit", "overig", 1990, 2);
+        db.addAmount(1.0, "uit", "Nog een", 1990, 2);
+        db.addAmount(12.0, "in", "overig", 1990, 2);
+        db.addAmount(23.0, "in", "overig", 1990, 2);
+        db.addAmount(1.0, "in", "Nog een", 1990, 2);
+        //readUitIn("uit");
+        readUitIn("in", bedragListInkomst, categorieListInkomst);
+        readUitIn("uit", bedragListUitgave, categorieListUitgave);
+        //whereT();
+
+        //Charts invullen
+
+
         setUpCharts();
 
-        db = new DatabaseHelper(this);
+
+    }
+
+    private void makeSpinner(Spinner spinner, Cursor mndJaar) {
+        String[] mndJaarArray = new String[mndJaar.getCount()];
+        for(int i=0; mndJaar.moveToNext(); i++) {
+            mndJaarArray[i] = mndJaar.getString(0) + " " + mndJaar.getString(1);
+        }
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mndJaarArray);
+        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(spinnerArrayAdapter);
     }
 
     private void addColors() {
@@ -121,10 +154,31 @@ public class MainActivity extends AppCompatActivity {
         pieChartInkomsten.setHoleRadius(0);
         pieChartUitgaven.setHoleRadius(0); //Lelijk gat in het midden van een piechart uitgezet
 
-        fillCharts(); //DataSets toevoegen
+        fillCharts2(); //DataSets toevoegen
 
     }
 
+    private void fillCharts2() {
+        PieDataSet inkomstenDataSet = new PieDataSet(bedragListInkomst, "Bedrag per categorie");
+        inkomstenDataSet.setSliceSpace(0);
+        inkomstenDataSet.setValueTextSize(14);
+        inkomstenDataSet.setColors(colors);
+        PieDataSet uitgavenDataSet = new PieDataSet(bedragListUitgave, "Bedrag per categorie");
+        uitgavenDataSet.setSliceSpace(0);
+        uitgavenDataSet.setValueTextSize(14);
+        uitgavenDataSet.setColors(colors);
+
+        PieData inkomstenPieData = new PieData(inkomstenDataSet);
+        PieData uitgavenPieData = new PieData(uitgavenDataSet);
+
+        pieChartInkomsten.setData(inkomstenPieData);
+        pieChartUitgaven.setData(uitgavenPieData);
+
+        pieChartInkomsten.invalidate();
+        pieChartUitgaven.invalidate();
+    }
+
+    /*
     private void fillCharts() {
         //Dit stuk voorzie ik nog van comments in de nabije toekomst
         ArrayList<PieEntry> yEntriesInkomsten = new ArrayList<>();
@@ -161,43 +215,19 @@ public class MainActivity extends AppCompatActivity {
         //Invalidate de charts
         pieChartInkomsten.invalidate();
         pieChartUitgaven.invalidate();
-
     }
+    */
 
-    //add given amount to database with current month + year
-    public void addValues (double bedrag, String inUit, String cat) {
-        Calendar cal = Calendar.getInstance();
-        int month = cal.get(Calendar.MONTH) + 1; //Increment with 1 so that e.g. January has index 1 instead of 0
-        int year = cal.get(Calendar.YEAR);
-        boolean insert = db.addAmount(bedrag, inUit, cat, month, year); //Add new values to database
-        if (insert) toastMessage("Insert correct");
-        else toastMessage("Insert went wrong");
-    }
-
-    //Read Bedrag and Catogorie column from database
-    public void readBedragCategorie (){
-        Cursor data = db.readBedragCat();
+    //Gets sum of bedrag and categorie from database for uitgaven or inkomsten
+    private void readUitIn(String uitIn, List<PieEntry> bedrag, List<String> categorie) {
+        Cursor data = db.getUitIn(uitIn);
         int saveBedrag = 0; //Index of the column in the select statement of the query; so not the index of the column in the table!
         int saveCat = 1;
-        ArrayList<Double> bedragList = new ArrayList<>();
-        ArrayList<String> categorieList = new ArrayList<>();
         while(data.moveToNext()) { //moves to next row in query
-            Double bedrag = data.getDouble(saveBedrag); // gets result from current in column saveBedrag
-            String categorie = data.getString(saveCat);
-            bedragList.add(bedrag);
-            categorieList.add(categorie);
-        }
-    }
-
-    //Read categorie column from database
-    public String readCategorie (){
-        Cursor data = db.readCat();
-        int ColumnToShow = 0;
-        if (data.moveToNext()) {
-            return data.getString(ColumnToShow);
-        }
-        else {
-            return "";
+            Float tempBedrag = data.getFloat(saveBedrag); // gets result from current in column saveBedrag
+            String tempCategorie = data.getString(saveCat);
+            bedrag.add(new PieEntry(tempBedrag));
+            categorie.add(tempCategorie);
         }
     }
 

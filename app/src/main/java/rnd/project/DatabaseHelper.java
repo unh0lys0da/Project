@@ -47,6 +47,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onUpgrade(db, oldVersion, newVersion);
     }
 
+    //Adds amount to table
     public boolean addAmount(double bedrag, String uitofin, String cat, int jaar, int maand) {
         //get database in write mode
         SQLiteDatabase db = this.getWritableDatabase();
@@ -65,27 +66,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         else return true; //Adding row succeeded
     }
 
-    public Cursor readCat() {
+    //Returns cursor with all columns for given month in year
+    public Cursor getMaand(int month, int year) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor data = db.rawQuery("SELECT " + COLUMN_3_CATEGORIE + " FROM " + TABLE_NAME, null);
+        String maand = String.valueOf(month);
+        String jaar = String.valueOf(year);
+        Cursor data = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_5_MAAND + " = \"" + maand + "\" AND " +
+                COLUMN_4_JAAR + " = \"" + jaar + "\"", null);
         return data;
     }
 
-    public Cursor readBedragCat() {
+    public Cursor getMaandJaar() {
         SQLiteDatabase db = this.getReadableDatabase();
-        String[] projection = {
-                COLUMN_1_BEDRAG,
-                COLUMN_3_CATEGORIE
-        };
-        Cursor data = db.query(
-                TABLE_NAME,                    // The table to query
-                projection,                    // The columns to return
-                null,                          // The columns for the WHERE clause
-                null,                          // The values for the WHERE clause
-                null,                          // don't group the rows
-                null,                          // don't filter by row groups
-                null                           // The sort order
-        );
+        Cursor data = db.rawQuery("SELECT DISTINCT " + COLUMN_5_MAAND + "," + COLUMN_4_JAAR + " FROM " + TABLE_NAME + " ORDER BY " + COLUMN_4_JAAR, null);
+        return data;
+    }
+    //Returns cursor with sum of bedrag and categorie for all inkomsten or uitgaven
+    public Cursor getUitIn(String uitIn) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor data = db.rawQuery("SELECT sum(" + COLUMN_1_BEDRAG + "), " + COLUMN_3_CATEGORIE + " FROM " + TABLE_NAME + " WHERE "
+                + COLUMN_2_UITOFIN + " = \"" + uitIn + "\" GROUP BY " + COLUMN_3_CATEGORIE, null);
         return data;
     }
 }
