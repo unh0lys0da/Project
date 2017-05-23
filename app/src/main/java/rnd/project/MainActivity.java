@@ -184,11 +184,11 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         pieChartInkomsten.setHoleRadius(0);
         pieChartUitgaven.setHoleRadius(0); //Lelijk gat in het midden van een piechart uitgezet
 
-        fillCharts2(); //DataSets toevoegen
+        fillCharts2(false); //DataSets toevoegen
 
     }
 
-    private void fillCharts2() {
+    private void fillCharts2(boolean setChanged) {
         PieDataSet inkomstenDataSet = new PieDataSet(bedragListInkomst, "Bedrag per categorie");
         inkomstenDataSet.setSliceSpace(0);
         inkomstenDataSet.setValueTextSize(14);
@@ -204,6 +204,10 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         pieChartInkomsten.setData(inkomstenPieData);
         pieChartUitgaven.setData(uitgavenPieData);
 
+        if(setChanged) {
+            pieChartUitgaven.notifyDataSetChanged();
+            pieChartInkomsten.notifyDataSetChanged();
+        }
         pieChartInkomsten.invalidate();
         pieChartUitgaven.invalidate();
     }
@@ -293,6 +297,13 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         String itemSelected = (String) parent.getItemAtPosition(position);
         MonthYear my = new MonthYear(0, 0);
         parseMonthYearFromString(my,itemSelected);
+        //bedragListInkomst.clear();
+        //categorieListInkomst.clear();
+        //bedragListUitgave.clear();
+        //categorieListUitgave.clear();
+        readUitInMonthYear("in", bedragListInkomst, categorieListInkomst, my.getMonth(), my.getYear());
+        readUitInMonthYear("uit", bedragListUitgave, categorieListUitgave, my.getMonth(), my.getYear());
+        fillCharts2(true);
 
     }
 
@@ -306,13 +317,6 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
 
         }
         my.setYear(Integer.parseInt(results[1]));
-        //bedragListInkomst.clear();
-        //categorieListInkomst.clear();
-        //bedragListUitgave.clear();
-        //categorieListUitgave.clear();
-        readUitInMonthYear("in", bedragListInkomst, categorieListInkomst, my.getMonth(), my.getYear());
-        readUitInMonthYear("uit", bedragListUitgave, categorieListUitgave, my.getMonth(), my.getYear());
-        fillCharts2();
     }
 
     //Gets sum of bedrag and categorie from database for uitgaven or inkomsten
