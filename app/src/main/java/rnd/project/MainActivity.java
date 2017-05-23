@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
@@ -40,6 +41,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        db = new DatabaseHelper(this);
+        Cursor mndJaar = db.getMaandJaar();
+        Spinner spinner = (Spinner) findViewById(R.id.month_spinner);
+
+        makeSpinner(spinner,mndJaar);
+
         colors = new ArrayList<>();
         bedragListInkomst = new ArrayList<>();
         categorieListInkomst = new ArrayList<>();
@@ -48,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
         addColors();
 
         //Tijdelijke shit om db te vullen
-        db = new DatabaseHelper(this);
         db.addAmount(12.0, "uit", "overig", 1990, 2);
         db.addAmount(23.0, "uit", "overig", 1990, 2);
         db.addAmount(1.0, "uit", "Nog een", 1990, 2);
@@ -65,6 +71,10 @@ public class MainActivity extends AppCompatActivity {
 
         setUpCharts();
 
+
+    }
+
+    private void makeSpinner(Spinner spinner, Cursor mndJaar) {
 
     }
 
