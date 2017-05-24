@@ -49,10 +49,10 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         db = new DatabaseHelper(this);
 
         // Moest even om de spinner te checken
-        db.addAmount(12.0, "uit", "overig", 1995, 3);
-        db.addAmount(40.0, "uit", "overig", 1995, 3);
-        db.addAmount(50.0, "uit", "kaas", 1995, 3);
-        db.addAmount(15.0, "uit", "overig", 1997, 5);
+        db.addAmount(12.0, "uit", "overig", 1995, 3, 2);
+        db.addAmount(40.0, "uit", "overig", 1995, 3, 12);
+        db.addAmount(50.0, "uit", "kaas", 1995, 3, 02);
+        db.addAmount(15.0, "uit", "overig", 1997, 5, 1235);
         Cursor mndJaar = db.getMaandJaar();
         spinner = (Spinner) findViewById(R.id.month_spinner);
 
@@ -66,12 +66,12 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         addColors();
 
         //Tijdelijke shit om db te vullen
-        db.addAmount(12.0, "uit", "overig", 1990, 2);
-        db.addAmount(23.0, "uit", "overig", 1990, 2);
-        db.addAmount(1.0, "uit", "Nog een", 1990, 2);
-        db.addAmount(12.0, "in", "overig", 1990, 2);
-        db.addAmount(23.0, "in", "overig", 1990, 2);
-        db.addAmount(1.0, "in", "Nog een", 1990, 2);
+        db.addAmount(12.0, "uit", "overig", 1990, 2,3);
+        db.addAmount(23.0, "uit", "overig", 1990, 2,6);
+        db.addAmount(1.0, "uit", "Nog een", 1990, 2,9);
+        db.addAmount(12.0, "in", "overig", 1990, 2,31);
+        db.addAmount(23.0, "in", "overig", 1990, 2, 200);
+        db.addAmount(1.0, "in", "Nog een", 1990, 2, 17);
         //readUitIn("uit");
         readUitIn("in", bedragListInkomst, categorieListInkomst);
         readUitIn("uit", bedragListUitgave, categorieListUitgave);
