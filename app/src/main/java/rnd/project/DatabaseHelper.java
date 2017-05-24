@@ -81,7 +81,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getMaandJaar() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor data = db.rawQuery("SELECT DISTINCT " + COLUMN_5_MAAND + "," + COLUMN_4_JAAR + " FROM " + TABLE_NAME + " ORDER BY " + COLUMN_4_JAAR, null);
+        Cursor data = db.rawQuery("SELECT DISTINCT " + COLUMN_5_MAAND + "," + COLUMN_4_JAAR + " FROM " + TABLE_NAME + " WHERE " + COLUMN_2_UITOFIN + " != " + "\"empty\"" + " ORDER BY " + COLUMN_4_JAAR, null);
         return data;
     }
     //Returns cursor with sum of bedrag and categorie for all inkomsten or uitgaven
@@ -95,9 +95,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor getUitInMonthYear(String uitIn, int month, int year) {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT sum(" + COLUMN_1_BEDRAG + "), " + COLUMN_3_CATEGORIE + " FROM " + TABLE_NAME + " WHERE "
-                + COLUMN_2_UITOFIN + " = \"" + uitIn + "\"" + " AND " + COLUMN_5_MAAND + " = " + month + " AND " + COLUMN_4_JAAR + " = " + year +  " GROUP BY " + COLUMN_3_CATEGORIE;
+                + COLUMN_2_UITOFIN + " = \"" + uitIn + "\"" + " AND " + COLUMN_5_MAAND + " = " + month + " AND " + COLUMN_4_JAAR + " = " + year + " AND " + COLUMN_3_CATEGORIE + " != " + " \"empty\" " + " GROUP BY " + COLUMN_3_CATEGORIE;
         Cursor data = db.rawQuery("SELECT sum(" + COLUMN_1_BEDRAG + "), " + COLUMN_3_CATEGORIE + " FROM " + TABLE_NAME + " WHERE "
-                + COLUMN_2_UITOFIN + " = \"" + uitIn + "\"" + " AND " + COLUMN_5_MAAND + " = " + month + " AND " + COLUMN_4_JAAR + " = " + year +  " GROUP BY " + COLUMN_3_CATEGORIE, null);
+                + COLUMN_2_UITOFIN + " = \"" + uitIn + "\"" + " AND " + COLUMN_5_MAAND + " = " + month + " AND " + COLUMN_4_JAAR + " = " + year + " AND " + COLUMN_2_UITOFIN + " != " + "\"empty\"" + " GROUP BY " + COLUMN_3_CATEGORIE, null);
         System.out.println(query);
         return data;
     }
@@ -112,7 +112,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean addCategory(String cat) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put(COLUMN_1_BEDRAG,0);
+        values.put(COLUMN_2_UITOFIN,"empty");
         values.put(COLUMN_3_CATEGORIE,cat);
+        values.put(COLUMN_4_JAAR,1990);
+        values.put(COLUMN_5_MAAND,1);
+        values.put(COLUMN_6_DAG,1);
         long result = db.insert(TABLE_NAME, null, values);
         return (result != -1);
     }

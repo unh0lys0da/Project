@@ -30,13 +30,14 @@ public class InvoerActivity extends AppCompatActivity implements AdapterView.OnI
     DatabaseHelper db;
     private String itemSelected;
     private String uitin;
+    private Spinner spinner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        uitin = "in";
         super.onCreate(savedInstanceState);
+        uitin = "in";
         setContentView(R.layout.nieuwe_invoer);
         db = new DatabaseHelper(this);
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        spinner = (Spinner) findViewById(R.id.spinner);
         setUpSpinner(spinner);
         ToggleButton uitIn = (ToggleButton) findViewById(R.id.inUitToggle);
         uitIn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -62,6 +63,11 @@ public class InvoerActivity extends AppCompatActivity implements AdapterView.OnI
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spinnerArrayAdapter);
         spinner.setOnItemSelectedListener(this);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setUpSpinner(spinner);
     }
 
     private void toastMessage (String message) {
