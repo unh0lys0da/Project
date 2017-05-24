@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/Categorien"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="Categoriën"
+        android:textSize="32sp" />
+
+    <Button
+        android:id="@+id/goToSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="Back" />
+
+    <Spinner
+        android:id="@+id/categorieSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="41dp"
+        android:layout_below="@+id/goToSettings"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/nieuweCategorie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Creëer Nieuwe Categorie"
+        android:layout_below="@+id/categorieSpinner"
+        android:layout_toEndOf="@+id/goToSettings"
+        android:layout_marginTop="178dp" />
+
+    <EditText
+        android:id="@+id/nieuweCategorieNaam"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text="..."
+        android:layout_marginBottom="64dp"
+        android:layout_alignBottom="@+id/nieuweCategorie"
+        android:layout_alignStart="@+id/nieuweCategorie" />
+
+    <Button
+        android:id="@+id/hernoemCategorie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:text="Hernoem Categorie"
+        android:layout_below="@+id/nieuweCategorie"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/verwijderCategorie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/hernoemCategorie"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="23dp"
+        android:text="Verwijder Categorie" />
+
+</RelativeLayout>

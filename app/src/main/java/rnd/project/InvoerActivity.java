@@ -62,8 +62,10 @@ public class InvoerActivity extends AppCompatActivity implements AdapterView.OnI
         int month = cal.get(Calendar.MONTH) + 1; //Increment with 1 so that e.g. January has index 1 instead of 0
         int year = cal.get(Calendar.YEAR);
         boolean insert = db.addAmount(bedrag, inUit, cat, month, year); //Add new values to database
-        if (insert) toastMessage("Insert correct");
-        else toastMessage("Insert went wrong");
+        if (insert)
+            toastMessage("Insert correct");
+        else
+            toastMessage("Insert went wrong");
     }
 
     private void toastMessage (String message) {
