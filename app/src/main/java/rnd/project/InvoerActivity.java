@@ -16,7 +16,14 @@ import android.widget.ToggleButton;
 import java.util.Calendar;
 
 /**
- * Created by Gebruiker on 17/05/2017.
+ * Created by:
+ * Rits Joosten
+ * Tom van der Waa
+ * Joey van den Eijnden
+ * Auke Rosier
+ * Niels van Velzen
+ * Douwe Huijsmans
+ * on 17/05/2017.
  */
 
 public class InvoerActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -65,7 +72,6 @@ public class InvoerActivity extends AppCompatActivity implements AdapterView.OnI
         home = new Intent(getBaseContext(),MainActivity.class);
         startActivity(home);
     }
-    //submit button moet nog werkend worden.
     //Add given amount to database
     public void submitEntry(View view) {
         EditText bedragInput = (EditText) findViewById(R.id.bedragInput);

@@ -8,7 +8,14 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 
 /**
- * Created by Gebruiker on 17/05/2017.
+ * Created by:
+ * Rits Joosten
+ * Tom van der Waa
+ * Joey van den Eijnden
+ * Auke Rosier
+ * Niels van Velzen
+ * Douwe Huijsmans
+ * on 17/05/2017.
  */
 
 public class LijstActivity extends AppCompatActivity {
