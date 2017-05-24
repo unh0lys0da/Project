@@ -32,6 +32,7 @@ public class InvoerActivity extends AppCompatActivity implements AdapterView.OnI
     private String uitin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        uitin = "in";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.nieuwe_invoer);
         db = new DatabaseHelper(this);

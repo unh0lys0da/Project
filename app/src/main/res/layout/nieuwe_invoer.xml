@@ -98,7 +98,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Herhaald"
-        android:layout_marginTop="42dp"
+        android:layout_marginTop="14dp"
         android:layout_below="@+id/opdeelCheck"
         android:layout_alignStart="@+id/opdeelCheck" />
     //checkbox voor "Dag"
@@ -164,10 +164,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/submitbtn"
-        android:layout_marginTop="34dp"
+        android:layout_marginTop="12dp"
         android:textSize="24sp"
+        android:onClick="submitEntry"
         android:layout_below="@+id/maandCheck"
-        android:layout_centerHorizontal="true"
-        android:onClick="submitEntry"/>
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/nieuweCategorie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/categorieText"
+        android:layout_toEndOf="@+id/elkeText"
+        android:text="Button"
+        android:onClick="nieuweCategorie"/>
 
 </RelativeLayout>
