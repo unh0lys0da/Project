@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 public class CategoryActivity extends AppCompatActivity {
 
+    // Deze klasse kan vanuit 'Settings' worden aangeroepen. Hier kan de gebruiker een categorie toevoegen.
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

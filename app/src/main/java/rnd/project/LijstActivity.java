@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
  */
 
 public class LijstActivity extends AppCompatActivity {
+    // #aandacht
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
