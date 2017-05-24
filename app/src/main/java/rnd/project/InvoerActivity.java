@@ -56,16 +56,6 @@ public class InvoerActivity extends AppCompatActivity implements AdapterView.OnI
         spinner.setOnItemSelectedListener(this);
     }
 
-    //add given amount to database with current month + year
-    public void addValues (double bedrag, String inUit, String cat) {
-        Calendar cal = Calendar.getInstance();
-        int month = cal.get(Calendar.MONTH) + 1; //Increment with 1 so that e.g. January has index 1 instead of 0
-        int year = cal.get(Calendar.YEAR);
-        boolean insert = db.addAmount(bedrag, inUit, cat, month, year); //Add new values to database
-        if (insert) toastMessage("Insert correct");
-        else toastMessage("Insert went wrong");
-    }
-
     private void toastMessage (String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
@@ -76,6 +66,7 @@ public class InvoerActivity extends AppCompatActivity implements AdapterView.OnI
         startActivity(home);
     }
     //submit button moet nog werkend worden.
+    //Add given amount to database
     public void submitEntry(View view) {
         EditText bedragInput = (EditText) findViewById(R.id.bedragInput);
         EditText dagInput = (EditText) findViewById(R.id.dagInput);
@@ -87,7 +78,9 @@ public class InvoerActivity extends AppCompatActivity implements AdapterView.OnI
         int maand = Integer.parseInt(maandInput.getText().toString());
         int jaar = Integer.parseInt(jaarInput.getText().toString());
 
-        db.addAmount(bedrag,uitin,itemSelected,jaar,maand);
+        boolean insert = db.addAmount(bedrag,uitin,itemSelected,jaar,maand,dag);
+        if (insert) toastMessage("Insert correct");
+        else toastMessage("Insert went wrong");
     }
 
     private double parseBedrag(String s) {
