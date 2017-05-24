@@ -18,6 +18,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_3_CATEGORIE = "categorie";
     public static final String COLUMN_4_JAAR = "jaar";
     public static final String COLUMN_5_MAAND = "maand";
+    public static final String COLUMN_6_DAG = "dag";
 
 
     public DatabaseHelper(Context context) {
@@ -34,7 +35,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         COLUMN_2_UITOFIN + " TEXT," +
                         COLUMN_3_CATEGORIE + " TEXT," +
                         COLUMN_4_JAAR + " INTEGER," +
-                        COLUMN_5_MAAND + " INTEGER)";
+                        COLUMN_5_MAAND + " INTEGER," +
+                        COLUMN_6_DAG + " INTEGER)";
         db.execSQL(CREATE_TABLE);
     }
 
@@ -48,7 +50,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //Adds amount to table
-    public boolean addAmount(double bedrag, String uitofin, String cat, int jaar, int maand) {
+    public boolean addAmount(double bedrag, String uitofin, String cat, int jaar, int maand, int dag) {
         //get database in write mode
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -59,6 +61,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_3_CATEGORIE, cat);
         values.put(COLUMN_4_JAAR, jaar);
         values.put(COLUMN_5_MAAND, maand);
+        values.put(COLUMN_6_DAG, dag);
 
         // Insert the new row, returning the primary key value of the new row or -1 if failed
         long result = db.insert(TABLE_NAME, null, values);
