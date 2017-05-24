@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         String[] mndJaarArray = new String[mndJaar.getCount()];
         Log.d("first","" + mndJaar.getCount());
         for(int i=0; mndJaar.moveToNext(); i++) {
-            mndJaarArray[i] = MONTHS[mndJaar.getInt(0) + 1] + " " + mndJaar.getString(1);
+            mndJaarArray[i] = MONTHS[mndJaar.getInt(0) - 1] + " " + mndJaar.getString(1);
             Log.d("mndjaar",mndJaar.getString(0) + "," + mndJaar.getString(1));
         }
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mndJaarArray);
@@ -297,9 +297,11 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         String itemSelected = (String) parent.getItemAtPosition(position);
         MonthYear my = new MonthYear(0, 0);
         parseMonthYearFromString(my,itemSelected);
-        //bedragListInkomst.clear();
+        Log.d("Month","" + my.getMonth());
+        Log.d("Year","" + my.getYear());
+        bedragListInkomst.clear();
         //categorieListInkomst.clear();
-        //bedragListUitgave.clear();
+        bedragListUitgave.clear();
         //categorieListUitgave.clear();
         readUitInMonthYear("in", bedragListInkomst, categorieListInkomst, my.getMonth(), my.getYear());
         readUitInMonthYear("uit", bedragListUitgave, categorieListUitgave, my.getMonth(), my.getYear());
@@ -312,9 +314,10 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         System.out.println(results[0]);
         System.out.println(results[1]);
         for(int i=0;i<MONTHS.length;i++) {
-            if(results[0].equals(MONTHS[i]))
+            if(results[0].equals(MONTHS[i])) {
                 my.setMonth(i + 1);
-
+                break;
+            }
         }
         my.setYear(Integer.parseInt(results[1]));
     }
@@ -325,6 +328,7 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         int saveBedrag = 0; //Index of the column in the select statement of the query; so not the index of the column in the table!
         int saveCat = 1;
         while(data.moveToNext()) { //moves to next row in query
+            toastMessage("" + data.getString(0) + "," + data.getString(1));
             Float tempBedrag = data.getFloat(saveBedrag); // gets result from current in column saveBedrag
             String tempCategorie = data.getString(saveCat);
             bedrag.add(new PieEntry(tempBedrag));
