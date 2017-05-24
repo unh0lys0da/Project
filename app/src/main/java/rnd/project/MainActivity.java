@@ -25,6 +25,18 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+/**
+ * Created by:
+ * Rits Joosten
+ * Tom van der Waa
+ * Joey van den Eijnden
+ * Auke Rosier
+ * Niels van Velzen
+ * Douwe Huijsmans
+ * on 17/05/2017.
+ */
+
+
 public class MainActivity extends AppCompatActivity implements OnItemSelectedListener {
     DatabaseHelper db;
     public PieChart pieChartInkomsten;
@@ -49,10 +61,10 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         db = new DatabaseHelper(this);
 
         // Moest even om de spinner te checken
-        db.addAmount(12.0, "uit", "overig", 1995, 3);
-        db.addAmount(40.0, "uit", "overig", 1995, 3);
-        db.addAmount(50.0, "uit", "kaas", 1995, 3);
-        db.addAmount(15.0, "uit", "overig", 1997, 5);
+        db.addAmount(12.0, "uit", "overig", 1995, 3, 2);
+        db.addAmount(40.0, "uit", "overig", 1995, 3, 3);
+        db.addAmount(50.0, "uit", "kaas", 1995, 3, 4);
+        db.addAmount(15.0, "uit", "overig", 1997, 5, 5);
         Cursor mndJaar = db.getMaandJaar();
         spinner = (Spinner) findViewById(R.id.month_spinner);
 
@@ -66,12 +78,12 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         addColors();
 
         //Tijdelijke shit om db te vullen
-        db.addAmount(12.0, "uit", "overig", 1990, 2);
-        db.addAmount(23.0, "uit", "overig", 1990, 2);
-        db.addAmount(1.0, "uit", "Nog een", 1990, 2);
-        db.addAmount(12.0, "in", "overig", 1990, 2);
-        db.addAmount(23.0, "in", "overig", 1990, 2);
-        db.addAmount(1.0, "in", "Nog een", 1990, 2);
+        db.addAmount(12.0, "uit", "overig", 1990, 2, 1);
+        db.addAmount(23.0, "uit", "overig", 1990, 2, 2);
+        db.addAmount(1.0, "uit", "Nog een", 1990, 2, 3);
+        db.addAmount(12.0, "in", "overig", 1990, 2, 4);
+        db.addAmount(23.0, "in", "overig", 1990, 2, 5);
+        db.addAmount(1.0, "in", "Nog een", 1990, 2, 6);
         //readUitIn("uit");
         readUitIn("in", bedragListInkomst, categorieListInkomst);
         readUitIn("uit", bedragListUitgave, categorieListUitgave);
