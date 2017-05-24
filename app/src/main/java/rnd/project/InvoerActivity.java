@@ -67,6 +67,12 @@ public class InvoerActivity extends AppCompatActivity implements AdapterView.OnI
     private void toastMessage (String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
+
+    public void nieuweCategorie(View view) {
+        Intent category;
+        category = new Intent(getApplicationContext(),CategoryActivity.class);
+        startActivity(category);
+    }
     //Gets user back to starting screen
     public void gotoHome(View v) {
         Intent home;

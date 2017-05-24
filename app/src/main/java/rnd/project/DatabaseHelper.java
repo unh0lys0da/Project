@@ -108,4 +108,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor data = db.rawQuery(query,null);
         return data;
     }
+
+    public boolean addCategory(String cat) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_3_CATEGORIE,cat);
+        long result = db.insert(TABLE_NAME, null, values);
+        return (result != -1);
+    }
 }
