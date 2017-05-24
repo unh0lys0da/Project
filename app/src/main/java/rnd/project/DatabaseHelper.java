@@ -98,4 +98,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         System.out.println(query);
         return data;
     }
+
+    public Cursor getCategories() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT DISTINCT " + COLUMN_3_CATEGORIE + " FROM " + TABLE_NAME;
+        Cursor data = db.rawQuery(query,null);
+        return data;
+    }
 }

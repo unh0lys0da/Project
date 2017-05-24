@@ -48,15 +48,32 @@
         android:ems="10"
         android:inputType="numberDecimal" />
     //inputveld voor Datum
-    <EditText
+    <LinearLayout
         android:id="@+id/datumInput"
-        android:layout_width="wrap_content"
+        android:datePickerMode="spinner"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="date"
         android:layout_alignBaseline="@+id/datumText"
         android:layout_alignBottom="@+id/datumText"
-        android:layout_alignStart="@+id/bedragInput" />
+        android:layout_alignStart="@+id/bedragInput"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/dagInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <EditText
+            android:id="@+id/maandInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <EditText
+            android:id="@+id/jaarInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </LinearLayout>
     //spinner voor het kiezen van categorie
     <Spinner
         android:id="@+id/spinner"
@@ -150,6 +167,7 @@
         android:layout_marginTop="34dp"
         android:textSize="24sp"
         android:layout_below="@+id/maandCheck"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="submitEntry"/>
 
 </RelativeLayout>
