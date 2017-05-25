@@ -20,6 +20,7 @@ import java.util.ArrayList;
  */
 
 public class SettingsActivity extends AppCompatActivity {
+    // Settings moet nog vorm worden gegeven #aandacht
     DatabaseHelper db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -24,6 +24,10 @@ import java.util.List;
  */
 
 public class InkomstenActivity extends AppCompatActivity {
+
+    // Deze activity doet eigenlijk hetzelfde als main, maar dan slechts voor de groep 'inkomsten'
+    // Een van de cirkeldiagrammen valt weg en maakt plaats voor een legenda.
+
     DatabaseHelper db;
     public PieChart chart;
     private ArrayList<Integer> colors;

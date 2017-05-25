@@ -30,6 +30,9 @@ import java.util.List;
  */
 
 public class UitgavenActivity extends AppCompatActivity {
+    // Zelfde als InkomstenActivity.java
+
+
     DatabaseHelper db;
     public PieChart chart;
     private ArrayList<Integer> colors;
