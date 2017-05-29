@@ -109,9 +109,17 @@ public class InvoerActivity extends AppCompatActivity implements AdapterView.OnI
 
         // Converteer de data naar de goede types:
         double bedrag = parseBedrag(bedragInput.getText().toString());
-        int dag = Integer.parseInt(dagInput.getText().toString());
-        int maand = Integer.parseInt(maandInput.getText().toString());
-        int jaar = Integer.parseInt(jaarInput.getText().toString());
+
+        int dag;
+        if (isEmpty(dagInput)) { dag = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);}
+            else { dag = Integer.parseInt(dagInput.getText().toString());}
+        int maand;
+        if (isEmpty(maandInput)) { maand = Calendar.getInstance().get(Calendar.MONTH);}
+            else { maand = Integer.parseInt(maandInput.getText().toString());}
+            maand++;
+        int jaar;
+        if (isEmpty(jaarInput)) { jaar = Calendar.getInstance().get(Calendar.YEAR);}
+            else { jaar = Integer.parseInt(jaarInput.getText().toString());}
 
         // Voer de data in in de database:
         boolean insert = db.addAmount(bedrag,uitin,itemSelected,jaar,maand,dag);
@@ -121,6 +129,10 @@ public class InvoerActivity extends AppCompatActivity implements AdapterView.OnI
 
     private double parseBedrag(String s) {
         return Double.parseDouble(s.replace(',','.'));
+    }
+
+    private boolean isEmpty(EditText edittext) {
+        return edittext.getText().toString().trim().length() == 0;
     }
 
     @Override

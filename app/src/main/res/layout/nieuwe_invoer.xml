@@ -30,7 +30,7 @@
         android:id="@+id/datumText"
         android:layout_width="110dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:text="@string/Datum"
         android:textSize="24sp"
@@ -58,21 +58,33 @@
         android:layout_alignBottom="@+id/datumText"
         android:layout_alignStart="@+id/bedragInput"
         android:orientation="horizontal">
+
         <EditText
             android:id="@+id/dagInput"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:hint="dd"
+            android:inputType="number"
+            android:textAlignment="center" />
+
         <EditText
             android:id="@+id/maandInput"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:hint="mm"
+            android:inputType="number"
+            android:textAlignment="center" />
+
         <EditText
             android:id="@+id/jaarInput"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:hint="yyyy"
+            android:inputType="number"
+            android:textAlignment="center" />
     </LinearLayout>
     //spinner voor het kiezen van categorie
     <Spinner
@@ -176,7 +188,7 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/categorieText"
         android:layout_toEndOf="@+id/elkeText"
-        android:text="Button"
+        android:text="NEW"
         android:onClick="nieuweCategorie"/>
 
 </RelativeLayout>

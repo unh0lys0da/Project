@@ -13,8 +13,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="112dp"
         android:textSize="20dp"
-        android:text="TextView"
-        tools:text="Voer een nieuwe category in." />
+        android:text="Voer een nieuwe categorie in:"
+        />
 
     <EditText
         android:id="@+id/editText"
@@ -24,18 +24,17 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="18dp"
         android:ems="10"
-        android:hint="Categorie..."
+        android:hint="Categorie"
         android:inputType="textPersonName"
-        android:text="Name" />
+        android:textAlignment="center" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/editText"
         android:layout_below="@+id/editText"
-        android:text="Button"
-        tools:text="Voeg toe"
+        android:layout_centerHorizontal="true"
+        android:text="Voeg toe"
         android:onClick="addCategory"/>
 
 </RelativeLayout>

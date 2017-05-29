@@ -14,8 +14,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -47,6 +52,9 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         public PieChart pieChartUitgaven;
         private ArrayList<Integer> colors;
 
+        //Dit is het staafdiagram:
+        public HorizontalBarChart barChart;
+
         // Dit helpt om de scherm verhoudingen te bepalen
         private DisplayMetrics metrics;
         private int screenWidth;
@@ -56,6 +64,11 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         public List<String> categorieListInkomst;
         public List<PieEntry> bedragListUitgave;
         public List<String> categorieListUitgave;
+
+        public List<BarEntry> barListInkomst;
+        public List<BarEntry> barListUitgave;
+
+
 
         // Dit wordt het drop-down menu waar we de maand selecteren
         private Spinner spinner;
@@ -117,12 +130,17 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         readUitIn("in", bedragListInkomst, categorieListInkomst);
         readUitIn("uit", bedragListUitgave, categorieListUitgave);
 
-        // De volgende functie vult de diagrammen:
+        // De volgende functie vult de cirkeldiagrammen:
         setUpCharts();
+        // De volgende functie vult het staafdiagram:
+        //setUpBarChart();
     }
 
 
-        // Array van strings met de maanden, om makkelijk naar te kunnen verwijzen.
+
+
+
+    // Array van strings met de maanden, om makkelijk naar te kunnen verwijzen.
     String[] MONTHS = {
             "Januari",
             "Februari",
@@ -264,6 +282,33 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         fillCharts2(false);
 
     }
+
+   /* private void setUpBarChart() {
+        // De staafdiagrammen gedefinieerd:
+        barChart = (HorizontalBarChart) findViewById(R.id.barchart);
+
+
+        // De afmetingen:
+        barChart.setMinimumWidth(screenWidth);
+
+        // De beschrijvingen:
+        Description description = new Description();
+        description.setText("Inkomsten en Uitgaven");
+        barChart.setDescription(description);
+
+        //DataSets toevoegen:
+        fillCharts1(false);
+    }
+
+    private void fillCharts1(boolean setChanged) {
+        BarDataSet inkomstenDataSet = new BarDataSet(barListInkomst, "Inkomsten");
+        BarData data = new BarData(inkomstenDataSet);
+        barChart.setData(data);
+
+
+
+
+    } */
 
     private void fillCharts2(boolean setChanged) {
 
