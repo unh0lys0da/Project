@@ -28,6 +28,7 @@ import com.github.mikephil.charting.data.PieEntry;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -448,6 +449,15 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
+        Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
 
+        bedragListInkomst.clear();
+        bedragListUitgave.clear();
+
+        readUitInMonthYear("in", bedragListInkomst, categorieListInkomst, month, year);
+        readUitInMonthYear("uit", bedragListInkomst, categorieListInkomst, month, year);
+        fillCharts2(true);
     }
 }
