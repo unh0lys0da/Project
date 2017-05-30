@@ -17,6 +17,12 @@ public class CategoryActivity extends AppCompatActivity {
 
     }
 
+    public void removeCategory(View v) {
+        DatabaseHelper db;
+        db = new DatabaseHelper(this);
+        EditText text = (EditText) findViewById(R.id.editText);
+    }
+
     public void addCategory(View v) {
         DatabaseHelper db;
         db = new DatabaseHelper(this);

@@ -111,6 +111,10 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         db.addAmount(50.0, "uit", "categorie2", 1997, 4, 4);
         db.addAmount(15.0, "uit", "categorie1", 1997, 4, 5);
 
+        db.addCategory("categorie1");
+        db.addCategory("categorie2");
+        db.addCategory("categorie3");
+
         /*
         Cursor hoort bij SQL, en selecteert een tabel
         Het spinner object wordt gekoppeld aan de spinner in de layout d.m.v. ID
@@ -471,6 +475,7 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
             categorie.add(tempCategorie);
         }
     }
+
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
