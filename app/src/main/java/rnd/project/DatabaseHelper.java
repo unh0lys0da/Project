@@ -91,7 +91,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Wat returnt deze precies? #aandacht
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor data = db.rawQuery("SELECT DISTINCT " + COLUMN_5_MAAND + "," + COLUMN_4_JAAR + " FROM " + TABLE_NAME + " WHERE " +
-                COLUMN_2_UITOFIN + " != " + "\"empty\"" + " ORDER BY " + COLUMN_4_JAAR, null);
+                COLUMN_2_UITOFIN + " != " + "\"empty\"" + " ORDER BY " + COLUMN_4_JAAR + " DESC", null);
 
         return data;
     }
@@ -125,6 +125,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // een bedrag behoort.
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT DISTINCT " + COLUMN_3_CATEGORIE + " FROM " + TABLE_NAME;
+        Cursor data = db.rawQuery(query,null);
+        return data;
+    }
+
+    public Cursor getInUitAndDay(int month, int year) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT " +
+                COLUMN_1_BEDRAG + " , " +
+                COLUMN_2_UITOFIN + " , " +
+                COLUMN_3_CATEGORIE + " , " +
+                COLUMN_6_DAG + " FROM " +
+                TABLE_NAME + " WHERE " +
+                COLUMN_5_MAAND + " = " + month + " AND " +
+                COLUMN_4_JAAR + " = " + year + " AND " +
+                COLUMN_3_CATEGORIE + " != " + "\"empty\"" + " ORDER BY " +
+                COLUMN_6_DAG;
         Cursor data = db.rawQuery(query,null);
         return data;
     }

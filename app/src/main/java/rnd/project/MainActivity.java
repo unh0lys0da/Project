@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -74,6 +76,9 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         // Dit wordt het drop-down menu waar we de maand selecteren
         private Spinner spinner;
 
+        // Dit wordt de lijst met in en uitgaven onderaan
+        private ListView listView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -115,8 +120,10 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         spinner = (Spinner) findViewById(R.id.month_spinner);
         makeSpinner(spinner,mndJaar);
 
-        // Een aantal Lists moeten worden gedefinieerd.
-        // Wat gebeurt hier precies mee? Hoe worden deze gevuld? (kan het niet makkelijk terug vinden) #aandacht
+        listView = (ListView) findViewById(R.id.list);
+        setupListView(listView);
+
+        // Deze worden gebruikt voor de datasets van de piechart. Ze worden gevuld in readUitIn
         colors = new ArrayList<>();
         bedragListInkomst = new ArrayList<>();
         categorieListInkomst = new ArrayList<>();
@@ -127,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         addColors();
 
 
-        // IEMAND UITLEG!! #aandacht
+        // Leest de totale in en uitgaven in en verwerkt deze in de piecharts
         readUitIn("in", bedragListInkomst, categorieListInkomst);
         readUitIn("uit", bedragListUitgave, categorieListUitgave);
 
@@ -162,7 +169,6 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         /*
             Array van strings aanmaken met alle maanden
             Vervolgens wordt de spinner ingesteld met de maanden (en jaren)
-            Wat doet Log.d precies? #aandacht
         */
         String[] mndJaarArray = new String[mndJaar.getCount()];
         Log.d("first","" + mndJaar.getCount());
@@ -172,10 +178,33 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
             Log.d("mndjaar",mndJaar.getString(0) + "," + mndJaar.getString(1));
         }
 
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mndJaarArray);
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mndJaarArray);
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spinnerArrayAdapter);
         spinner.setOnItemSelectedListener(this);
+    }
+
+    private void setupListView(ListView listView) {
+        String string = (String) spinner.getItemAtPosition(0);
+        MonthYear my = new MonthYear(0,0);
+        parseMonthYearFromString(my, string);
+        int year = my.getYear();
+        int month = my.getMonth();
+        /*
+           Column 0: Bedrag
+           Column 1: Uit of in
+           Column 2: Categorie
+           Column 3: Dag
+         */
+        Cursor res = db.getInUitAndDay(month, year);
+        String[] inUitArray = new String[res.getCount()];
+        for(int i=0; res.moveToNext(); i++) {
+            String inuit = res.getString(1).equals("in") ? "+" : "-";
+            String row = inuit + res.getString(0) + "\t" + res.getString(2) + "\t" + res.getInt(3) + "-" + month + "-" + year;
+            inUitArray[i] = row;
+        }
+        ArrayAdapter<String> listArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, inUitArray);
+        listView.setAdapter(listArrayAdapter);
     }
 
     private void addColors() {
@@ -204,7 +233,7 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
 
     public void gotoUitgaven(View v){
         /*
-            Zelfde verhaal als gotoUitgaven
+            Zelfde verhaal als gotoInkomsten
          */
         Intent uitgaven;
         uitgaven = new Intent(getBaseContext(),UitgavenActivity.class);
@@ -245,13 +274,12 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         setContentView(R.layout.lijst);
     }
 
+    /*
     public void showBiggerLeftPie(View view) {
-        /*
-            Wat doet dit precies? Ik zie nergens dat het wordt aangeroepen #aandacht
-         */
         pieChartUitgaven.setVisibility(View.GONE);
         pieChartInkomsten.setMinimumHeight((screenWidth * 3) / 4);
     }
+    */
 
     private void setUpCharts() {
 
@@ -361,11 +389,8 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
+    // Deze class kan de ints maand en jaar bewaren om zo de class by reference mee te geven in een functie (met int kan dat niet)
     private class MonthYear {
-        /*
-            Een klasse voor maand en jaar
-            #aandacht
-         */
         private int month, year;
 
         public MonthYear(int month, int year) {
@@ -413,9 +438,9 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
 
     }
 
+    // Deze methode maakt parseerd jaar en maand uit een string met format "<maand> yyyy" en set MonthYear my daarna met de gevonden
+    // jaar en maand
     private void parseMonthYearFromString(MonthYear my, String toParse) {
-        // Haalt deze methode jaar en maand uit een string? #aandacht
-
         String[] results = toParse.split(" ");
         System.out.println(results[0]);
         System.out.println(results[1]);
@@ -439,7 +464,7 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         int saveCat = 1;
 
         while(data.moveToNext()) { //moves to next row in query
-            toastMessage("" + data.getString(0) + "," + data.getString(1));
+            //toastMessage("" + data.getString(0) + "," + data.getString(1));
             Float tempBedrag = data.getFloat(saveBedrag); // gets result from current in column saveBedrag
             String tempCategorie = data.getString(saveCat);
             bedrag.add(new PieEntry(tempBedrag));
