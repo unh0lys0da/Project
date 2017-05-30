@@ -33,9 +33,19 @@ public class InvoerActivity extends AppCompatActivity implements AdapterView.OnI
     private String itemSelected;
     private String uitin;
     private Spinner spinner;
+    private boolean herhaald;
+    private boolean dagelijks;
+    private boolean wekelijks;
+    private boolean maandelijks;
+    private boolean opdeel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        herhaald = false;
+        dagelijks = false;
+        wekelijks = false;
+        maandelijks = false;
+        opdeel = false;
 
         super.onCreate(savedInstanceState);
         uitin = "in";
@@ -135,6 +145,23 @@ public class InvoerActivity extends AppCompatActivity implements AdapterView.OnI
 
     private boolean isEmpty(EditText edittext) {
         return edittext.getText().toString().trim().length() == 0;
+    }
+
+    public void onCheckBoxClicked(View v) {
+        switch(v.getId()) {
+            case R.id.herhaaldCheck:
+                herhaald = !herhaald;
+                break;
+            case R.id.dagCheck:
+                dagelijks = !dagelijks;
+                break;
+            case R.id.maandCheck:
+                wekelijks = !wekelijks;
+                break;
+            case R.id.opdeelCheck:
+                opdeel = !opdeel;
+                break;
+        }
     }
 
     @Override

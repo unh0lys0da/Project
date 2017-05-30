@@ -21,6 +21,12 @@ public class CategoryActivity extends AppCompatActivity {
         DatabaseHelper db;
         db = new DatabaseHelper(this);
         EditText text = (EditText) findViewById(R.id.editText);
+        if(db.removeCategory(text.getText().toString())) {
+            toastMessage("Success!");
+        }
+        else {
+            toastMessage("Nothing to delete");
+        }
     }
 
     public void addCategory(View v) {

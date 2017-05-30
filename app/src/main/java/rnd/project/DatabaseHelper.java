@@ -196,6 +196,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public boolean removeCategory(String cat) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return (db.delete(TABLE_NAME_CAT, CAT_COLUMN_1_CATEGORIES + " = " + cat, null) != -1);
+        return (db.delete(TABLE_NAME_CAT, CAT_COLUMN_1_CATEGORIES + " = \"" + cat + "\"", null) > 0);
+        //String delete_query = "DELETE FROM " +
+        //        TABLE_NAME_CAT + " WHERE " +
+        //        CAT_COLUMN_1_CATEGORIES + " = \"" + cat + "\"";
+        //db.execSQL(delete_query);
     }
 }
