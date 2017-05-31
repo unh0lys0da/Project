@@ -14,7 +14,11 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by:
@@ -134,12 +138,28 @@ public class InvoerActivity extends AppCompatActivity implements AdapterView.OnI
             int jaar = isEmpty(jaarInput) ?
                     Calendar.getInstance().get(Calendar.YEAR) :
                     Integer.parseInt(jaarInput.getText().toString());
-
-            // Voer de data in in de database:
-            boolean insert = db.addAmount(bedrag, uitin, itemSelected, jaar, maand, dag);
-            if (insert) toastMessage("Bedrag toegevoegd");
-            else toastMessage("Er ging iets mis met het toevoegen van het bedrag");
+            String datum = dag + "/" + maand + "/" + jaar;
+            if (!chechDatum(datum)) toastMessage("Ongeldige datum ingevoerd"); //Chech op geldigheid van de datum
+            else {
+                // Voer de data in in de database:
+                boolean insert = db.addAmount(bedrag, uitin, itemSelected, jaar, maand, dag);
+                if (insert) toastMessage("Bedrag toegevoegd");
+                else toastMessage("Er ging iets mis met het toevoegen van het bedrag");
+            }
         }
+    }
+
+    //Controlleer of een meegegeven datum geldig is. Return false bij ongeldige datum
+    private boolean chechDatum(String datum) {
+        SimpleDateFormat dateCheck = new SimpleDateFormat("dd/MM/yyyy");
+        dateCheck.setLenient(false);
+        try {
+            dateCheck.parse(datum);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     private double parseBedrag(String s) {
