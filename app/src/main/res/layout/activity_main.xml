@@ -60,13 +60,32 @@
 
     </LinearLayout>
 
-    //De lijst van afschrijvingen etc.
-    <ListView
-        android:id="@+id/list"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:background="@android:color/darker_gray" />
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/scroll"
+        android:layout_alignParentStart="true">
 
+        <com.github.mikephil.charting.charts.HorizontalBarChart
+        android:id="@+id/barchart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    //De lijst van afschrijvingen etc.
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
+        <ListView
+            android:id="@+id/list"
+      		android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+      		android:layout_alignParentBottom="true"
+      		android:layout_alignParentStart="true"
+      		android:background="@android:color/darker_gray" />
+    </ScrollView>
 </RelativeLayout>

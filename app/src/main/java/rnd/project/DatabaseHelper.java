@@ -11,6 +11,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "Bedragen.db";
     public static final String TABLE_NAME = "Bedragen";
+    public static final String TABLE_NAME_CAT = "Categories";
 
     // Kolom namen:
     public static final String COLUMN_0_ID = "ID";
@@ -21,6 +22,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_5_MAAND = "maand";
     public static final String COLUMN_6_DAG = "dag";
 
+    // Kolom namen categories:
+    public static final String CAT_COLUMN_0_ID = "ID";
+    public static final String CAT_COLUMN_1_CATEGORIES = "categorie";
 
     public DatabaseHelper(Context context) {
         // Maakt database:
@@ -39,6 +43,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         COLUMN_5_MAAND + " INTEGER," +
                         COLUMN_6_DAG + " INTEGER)";
         db.execSQL(CREATE_TABLE);
+
+        CREATE_TABLE =
+                "CREATE TABLE " + TABLE_NAME_CAT +
+                        " (ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        CAT_COLUMN_1_CATEGORIES + " TEXT)";
+        db.execSQL(CREATE_TABLE);
+
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -79,9 +90,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         String maand = String.valueOf(month);
         String jaar = String.valueOf(year);
-
-        Cursor data = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_5_MAAND + " = \"" + maand + "\" AND " +
-                COLUMN_4_JAAR + " = \"" + jaar + "\"", null);
+        String query = "SELECT * FROM " +
+                TABLE_NAME + " WHERE " +
+                COLUMN_5_MAAND + " = \"" + maand + "\" AND " +
+                COLUMN_4_JAAR + " = \"" + jaar + "\"";
+        Cursor data = db.rawQuery(query, null);
 
         return data;
     }
@@ -90,8 +103,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor getMaandJaar() {
         // Wat returnt deze precies? #aandacht
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor data = db.rawQuery("SELECT DISTINCT " + COLUMN_5_MAAND + "," + COLUMN_4_JAAR + " FROM " + TABLE_NAME + " WHERE " +
-                COLUMN_2_UITOFIN + " != " + "\"empty\"" + " ORDER BY " + COLUMN_4_JAAR, null);
+        String query = "SELECT DISTINCT " +
+                COLUMN_5_MAAND + "," +
+                COLUMN_4_JAAR + " FROM " +
+                TABLE_NAME + " WHERE " +
+                COLUMN_2_UITOFIN + " != " + "\"empty\"" + " ORDER BY " +
+                COLUMN_4_JAAR + " DESC";
+        Cursor data = db.rawQuery(query, null);
 
         return data;
     }
@@ -101,8 +119,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor getUitIn(String uitIn) {
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor data = db.rawQuery("SELECT sum(" + COLUMN_1_BEDRAG + "), " + COLUMN_3_CATEGORIE + " FROM " + TABLE_NAME + " WHERE "
-                + COLUMN_2_UITOFIN + " = \"" + uitIn + "\" GROUP BY " + COLUMN_3_CATEGORIE, null);
+        String query = "SELECT sum(" +
+                COLUMN_1_BEDRAG + "), " +
+                COLUMN_3_CATEGORIE + " FROM " +
+                TABLE_NAME + " WHERE " +
+                COLUMN_2_UITOFIN + " = \"" + uitIn + "\" GROUP BY " +
+                COLUMN_3_CATEGORIE;
+        Cursor data = db.rawQuery(query, null);
 
         return data;
     }
@@ -110,12 +133,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor getUitInMonthYear(String uitIn, int month, int year) {
         // Wat returnt deze precies? #aandacht
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT sum(" + COLUMN_1_BEDRAG + "), " + COLUMN_3_CATEGORIE + " FROM " + TABLE_NAME + " WHERE "
-                + COLUMN_2_UITOFIN + " = \"" + uitIn + "\"" + " AND " + COLUMN_5_MAAND + " = " + month + " AND " + COLUMN_4_JAAR + " = "
-                + year + " AND " + COLUMN_3_CATEGORIE + " != " + " \"empty\" " + " GROUP BY " + COLUMN_3_CATEGORIE;
-        Cursor data = db.rawQuery("SELECT sum(" + COLUMN_1_BEDRAG + "), " + COLUMN_3_CATEGORIE + " FROM " + TABLE_NAME + " WHERE "
-                + COLUMN_2_UITOFIN + " = \"" + uitIn + "\"" + " AND " + COLUMN_5_MAAND + " = " + month + " AND " + COLUMN_4_JAAR + " = "
-                + year + " AND " + COLUMN_2_UITOFIN + " != " + "\"empty\"" + " GROUP BY " + COLUMN_3_CATEGORIE, null);
+        String query = "SELECT sum(" +
+                COLUMN_1_BEDRAG + "), " +
+                COLUMN_3_CATEGORIE + " FROM " +
+                TABLE_NAME + " WHERE " +
+                COLUMN_2_UITOFIN + " = \"" + uitIn + "\"" + " AND " +
+                COLUMN_5_MAAND + " = " + month + " AND " +
+                COLUMN_4_JAAR + " = " + year + " AND " +
+                COLUMN_2_UITOFIN + " != " + "\"empty\"" + " GROUP BY " +
+                COLUMN_3_CATEGORIE;
+        Cursor data = db.rawQuery(query, null);
         System.out.println(query);
         return data;
     }
@@ -124,22 +151,55 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Deze haalt de categorieen op, zodat in het dropdown menu kan worden gekozen tot welke categorie
         // een bedrag behoort.
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT DISTINCT " + COLUMN_3_CATEGORIE + " FROM " + TABLE_NAME;
+        String query = "SELECT DISTINCT " +
+                CAT_COLUMN_1_CATEGORIES + " FROM " +
+                TABLE_NAME_CAT;
         Cursor data = db.rawQuery(query,null);
         return data;
     }
 
+    /**
+     * Queried Bedrag, Uit of In, Categorie en Dag WHERE month = month AND jaar = year.
+     * @param month de maand om te querien
+     * @param year het jaar om te querien
+     * @return De resulterende query als Cursor
+     */
+    public Cursor getInUitAndDay(int month, int year) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT " +
+                COLUMN_1_BEDRAG + " , " +
+                COLUMN_2_UITOFIN + " , " +
+                COLUMN_3_CATEGORIE + " , " +
+                COLUMN_6_DAG + " FROM " +
+                TABLE_NAME + " WHERE " +
+                COLUMN_5_MAAND + " = " + month + " AND " +
+                COLUMN_4_JAAR + " = " + year + " AND " +
+                COLUMN_3_CATEGORIE + " != " + "\"empty\"" + " ORDER BY " +
+                COLUMN_6_DAG;
+        Cursor data = db.rawQuery(query,null);
+        return data;
+    }
+
+    /**
+     * Voegt cat toe aan de database
+     * @param cat De categorie om te toe te voegen aan de database
+     * @return true als succesvol, anders false.
+     */
     public boolean addCategory(String cat) {
         // Deze methode voegt een nieuwe invoer toe aan de database.
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_1_BEDRAG,0);
-        values.put(COLUMN_2_UITOFIN,"empty");
-        values.put(COLUMN_3_CATEGORIE,cat);
-        values.put(COLUMN_4_JAAR,1990);
-        values.put(COLUMN_5_MAAND,1);
-        values.put(COLUMN_6_DAG,1);
-        long result = db.insert(TABLE_NAME, null, values);
+        values.put(CAT_COLUMN_1_CATEGORIES,cat);
+        long result = db.insert(TABLE_NAME_CAT, null, values);
         return (result != -1);
+    }
+
+    public boolean removeCategory(String cat) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return (db.delete(TABLE_NAME_CAT, CAT_COLUMN_1_CATEGORIES + " = \"" + cat + "\"", null) > 0);
+        //String delete_query = "DELETE FROM " +
+        //        TABLE_NAME_CAT + " WHERE " +
+        //        CAT_COLUMN_1_CATEGORIES + " = \"" + cat + "\"";
+        //db.execSQL(delete_query);
     }
 }

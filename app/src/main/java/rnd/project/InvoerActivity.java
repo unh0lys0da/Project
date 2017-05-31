@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -32,9 +33,19 @@ public class InvoerActivity extends AppCompatActivity implements AdapterView.OnI
     private String itemSelected;
     private String uitin;
     private Spinner spinner;
+    private boolean herhaald;
+    private boolean dagelijks;
+    private boolean wekelijks;
+    private boolean maandelijks;
+    private boolean opdeel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        herhaald = false;
+        dagelijks = false;
+        wekelijks = false;
+        maandelijks = false;
+        opdeel = false;
 
         super.onCreate(savedInstanceState);
         uitin = "in";
@@ -76,6 +87,8 @@ public class InvoerActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
 
+
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -109,9 +122,16 @@ public class InvoerActivity extends AppCompatActivity implements AdapterView.OnI
 
         // Converteer de data naar de goede types:
         double bedrag = parseBedrag(bedragInput.getText().toString());
-        int dag = Integer.parseInt(dagInput.getText().toString());
-        int maand = Integer.parseInt(maandInput.getText().toString());
-        int jaar = Integer.parseInt(jaarInput.getText().toString());
+
+        int dag = isEmpty(dagInput) ?
+                Calendar.getInstance().get(Calendar.DAY_OF_MONTH) :
+                Integer.parseInt(dagInput.getText().toString());
+        int maand = isEmpty(maandInput) ?
+                Calendar.getInstance().get(Calendar.MONTH) :
+                Integer.parseInt(maandInput.getText().toString()) + 1;
+        int jaar = isEmpty(jaarInput) ?
+                Calendar.getInstance().get(Calendar.YEAR) :
+                Integer.parseInt(jaarInput.getText().toString());
 
         // Voer de data in in de database:
         boolean insert = db.addAmount(bedrag,uitin,itemSelected,jaar,maand,dag);
@@ -121,6 +141,27 @@ public class InvoerActivity extends AppCompatActivity implements AdapterView.OnI
 
     private double parseBedrag(String s) {
         return Double.parseDouble(s.replace(',','.'));
+    }
+
+    private boolean isEmpty(EditText edittext) {
+        return edittext.getText().toString().trim().length() == 0;
+    }
+
+    public void onCheckBoxClicked(View v) {
+        switch(v.getId()) {
+            case R.id.herhaaldCheck:
+                herhaald = !herhaald;
+                break;
+            case R.id.dagCheck:
+                dagelijks = !dagelijks;
+                break;
+            case R.id.maandCheck:
+                wekelijks = !wekelijks;
+                break;
+            case R.id.opdeelCheck:
+                opdeel = !opdeel;
+                break;
+        }
     }
 
     @Override

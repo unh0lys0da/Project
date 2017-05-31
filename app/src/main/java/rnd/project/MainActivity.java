@@ -11,11 +11,18 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -23,6 +30,7 @@ import com.github.mikephil.charting.data.PieEntry;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -47,6 +55,9 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         public PieChart pieChartUitgaven;
         private ArrayList<Integer> colors;
 
+        //Dit is het staafdiagram:
+        public HorizontalBarChart barChart;
+
         // Dit helpt om de scherm verhoudingen te bepalen
         private DisplayMetrics metrics;
         private int screenWidth;
@@ -57,8 +68,16 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         public List<PieEntry> bedragListUitgave;
         public List<String> categorieListUitgave;
 
+        public List<BarEntry> barListInkomst;
+        public List<BarEntry> barListUitgave;
+
+
+
         // Dit wordt het drop-down menu waar we de maand selecteren
         private Spinner spinner;
+
+        // Dit wordt de lijst met in en uitgaven onderaan
+        private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +111,10 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         db.addAmount(50.0, "uit", "categorie2", 1997, 4, 4);
         db.addAmount(15.0, "uit", "categorie1", 1997, 4, 5);
 
+        db.addCategory("categorie1");
+        db.addCategory("categorie2");
+        db.addCategory("categorie3");
+
         /*
         Cursor hoort bij SQL, en selecteert een tabel
         Het spinner object wordt gekoppeld aan de spinner in de layout d.m.v. ID
@@ -101,8 +124,10 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         spinner = (Spinner) findViewById(R.id.month_spinner);
         makeSpinner(spinner,mndJaar);
 
-        // Een aantal Lists moeten worden gedefinieerd.
-        // Wat gebeurt hier precies mee? Hoe worden deze gevuld? (kan het niet makkelijk terug vinden) #aandacht
+        listView = (ListView) findViewById(R.id.list);
+        setupListView(listView);
+
+        // Deze worden gebruikt voor de datasets van de piechart. Ze worden gevuld in readUitIn
         colors = new ArrayList<>();
         bedragListInkomst = new ArrayList<>();
         categorieListInkomst = new ArrayList<>();
@@ -113,16 +138,21 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         addColors();
 
 
-        // IEMAND UITLEG!! #aandacht
+        // Leest de totale in en uitgaven in en verwerkt deze in de piecharts
         readUitIn("in", bedragListInkomst, categorieListInkomst);
         readUitIn("uit", bedragListUitgave, categorieListUitgave);
 
-        // De volgende functie vult de diagrammen:
+        // De volgende functie vult de cirkeldiagrammen:
         setUpCharts();
+        // De volgende functie vult het staafdiagram:
+        //setUpBarChart();
     }
 
 
-        // Array van strings met de maanden, om makkelijk naar te kunnen verwijzen.
+
+
+
+    // Array van strings met de maanden, om makkelijk naar te kunnen verwijzen.
     String[] MONTHS = {
             "Januari",
             "Februari",
@@ -143,7 +173,6 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         /*
             Array van strings aanmaken met alle maanden
             Vervolgens wordt de spinner ingesteld met de maanden (en jaren)
-            Wat doet Log.d precies? #aandacht
         */
         String[] mndJaarArray = new String[mndJaar.getCount()];
         Log.d("first","" + mndJaar.getCount());
@@ -153,10 +182,33 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
             Log.d("mndjaar",mndJaar.getString(0) + "," + mndJaar.getString(1));
         }
 
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mndJaarArray);
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mndJaarArray);
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spinnerArrayAdapter);
         spinner.setOnItemSelectedListener(this);
+    }
+
+    private void setupListView(ListView listView) {
+        String string = (String) spinner.getItemAtPosition(0);
+        MonthYear my = new MonthYear(0,0);
+        parseMonthYearFromString(my, string);
+        int year = my.getYear();
+        int month = my.getMonth();
+        /*
+           Column 0: Bedrag
+           Column 1: Uit of in
+           Column 2: Categorie
+           Column 3: Dag
+         */
+        Cursor res = db.getInUitAndDay(month, year);
+        String[] inUitArray = new String[res.getCount()];
+        for(int i=0; res.moveToNext(); i++) {
+            String inuit = res.getString(1).equals("in") ? "+" : "-";
+            String row = inuit + res.getString(0) + "\t" + res.getString(2) + "\t" + res.getInt(3) + "-" + month + "-" + year;
+            inUitArray[i] = row;
+        }
+        ArrayAdapter<String> listArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, inUitArray);
+        listView.setAdapter(listArrayAdapter);
     }
 
     private void addColors() {
@@ -185,7 +237,7 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
 
     public void gotoUitgaven(View v){
         /*
-            Zelfde verhaal als gotoUitgaven
+            Zelfde verhaal als gotoInkomsten
          */
         Intent uitgaven;
         uitgaven = new Intent(getBaseContext(),UitgavenActivity.class);
@@ -226,13 +278,12 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         setContentView(R.layout.lijst);
     }
 
+    /*
     public void showBiggerLeftPie(View view) {
-        /*
-            Wat doet dit precies? Ik zie nergens dat het wordt aangeroepen #aandacht
-         */
         pieChartUitgaven.setVisibility(View.GONE);
         pieChartInkomsten.setMinimumHeight((screenWidth * 3) / 4);
     }
+    */
 
     private void setUpCharts() {
 
@@ -264,6 +315,33 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         fillCharts2(false);
 
     }
+
+   /* private void setUpBarChart() {
+        // De staafdiagrammen gedefinieerd:
+        barChart = (HorizontalBarChart) findViewById(R.id.barchart);
+
+
+        // De afmetingen:
+        barChart.setMinimumWidth(screenWidth);
+
+        // De beschrijvingen:
+        Description description = new Description();
+        description.setText("Inkomsten en Uitgaven");
+        barChart.setDescription(description);
+
+        //DataSets toevoegen:
+        fillCharts1(false);
+    }
+
+    private void fillCharts1(boolean setChanged) {
+        BarDataSet inkomstenDataSet = new BarDataSet(barListInkomst, "Inkomsten");
+        BarData data = new BarData(inkomstenDataSet);
+        barChart.setData(data);
+
+
+
+
+    } */
 
     private void fillCharts2(boolean setChanged) {
 
@@ -315,11 +393,8 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
+    // Deze class kan de ints maand en jaar bewaren om zo de class by reference mee te geven in een functie (met int kan dat niet)
     private class MonthYear {
-        /*
-            Een klasse voor maand en jaar
-            #aandacht
-         */
         private int month, year;
 
         public MonthYear(int month, int year) {
@@ -367,9 +442,9 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
 
     }
 
+    // Deze methode maakt parseerd jaar en maand uit een string met format "<maand> yyyy" en set MonthYear my daarna met de gevonden
+    // jaar en maand
     private void parseMonthYearFromString(MonthYear my, String toParse) {
-        // Haalt deze methode jaar en maand uit een string? #aandacht
-
         String[] results = toParse.split(" ");
         System.out.println(results[0]);
         System.out.println(results[1]);
@@ -393,7 +468,7 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         int saveCat = 1;
 
         while(data.moveToNext()) { //moves to next row in query
-            toastMessage("" + data.getString(0) + "," + data.getString(1));
+            //toastMessage("" + data.getString(0) + "," + data.getString(1));
             Float tempBedrag = data.getFloat(saveBedrag); // gets result from current in column saveBedrag
             String tempCategorie = data.getString(saveCat);
             bedrag.add(new PieEntry(tempBedrag));
@@ -401,8 +476,18 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         }
     }
 
+
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
+        Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
 
+        bedragListInkomst.clear();
+        bedragListUitgave.clear();
+
+        readUitInMonthYear("in", bedragListInkomst, categorieListInkomst, month, year);
+        readUitInMonthYear("uit", bedragListInkomst, categorieListInkomst, month, year);
+        fillCharts2(true);
     }
 }
