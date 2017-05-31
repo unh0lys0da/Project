@@ -46,6 +46,7 @@ public class InvoerActivity extends AppCompatActivity implements AdapterView.OnI
         wekelijks = false;
         maandelijks = false;
         opdeel = false;
+        itemSelected = "leeg";
 
         super.onCreate(savedInstanceState);
         uitin = "in";
@@ -120,23 +121,25 @@ public class InvoerActivity extends AppCompatActivity implements AdapterView.OnI
         EditText maandInput = (EditText) findViewById(R.id.maandInput);
         EditText jaarInput = (EditText) findViewById(R.id.jaarInput);
 
-        // Converteer de data naar de goede types:
-        double bedrag = parseBedrag(bedragInput.getText().toString());
+        if (isEmpty(bedragInput) || itemSelected == "leeg") toastMessage("Er is geen bedrag ingevoerd of geen categorie geselecteerd");
+        else {
+            // Converteer de data naar de goede types:
+            double bedrag = parseBedrag(bedragInput.getText().toString());
+            int dag = isEmpty(dagInput) ?
+                    Calendar.getInstance().get(Calendar.DAY_OF_MONTH) :
+                    Integer.parseInt(dagInput.getText().toString());
+            int maand = isEmpty(maandInput) ?
+                    Calendar.getInstance().get(Calendar.MONTH) + 1 :
+                    Integer.parseInt(maandInput.getText().toString());
+            int jaar = isEmpty(jaarInput) ?
+                    Calendar.getInstance().get(Calendar.YEAR) :
+                    Integer.parseInt(jaarInput.getText().toString());
 
-        int dag = isEmpty(dagInput) ?
-                Calendar.getInstance().get(Calendar.DAY_OF_MONTH) :
-                Integer.parseInt(dagInput.getText().toString());
-        int maand = isEmpty(maandInput) ?
-                Calendar.getInstance().get(Calendar.MONTH)+1 :
-                Integer.parseInt(maandInput.getText().toString());
-        int jaar = isEmpty(jaarInput) ?
-                Calendar.getInstance().get(Calendar.YEAR) :
-                Integer.parseInt(jaarInput.getText().toString());
-
-        // Voer de data in in de database:
-        boolean insert = db.addAmount(bedrag,uitin,itemSelected,jaar,maand,dag);
-        if (insert) toastMessage("Bedrag toegevoegd");
-        else toastMessage("Er ging iets mis met het toevoegen van het bedrag");
+            // Voer de data in in de database:
+            boolean insert = db.addAmount(bedrag, uitin, itemSelected, jaar, maand, dag);
+            if (insert) toastMessage("Bedrag toegevoegd");
+            else toastMessage("Er ging iets mis met het toevoegen van het bedrag");
+        }
     }
 
     private double parseBedrag(String s) {
