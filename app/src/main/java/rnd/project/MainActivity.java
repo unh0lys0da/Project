@@ -1,8 +1,12 @@
 package rnd.project;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -11,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
@@ -93,11 +98,23 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         // Nieuw database object aanmaken:
         db = new DatabaseHelper(this);
 
+        //Voor het opslaan van een boolean voor of de app voor het eerst opgestart wordt of niet
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        //Checkt of dit de eerste run van de applicatie is en zo ja, dan wordt om huidig saldo gevraagd
+        if (!prefs.getBoolean("firstTime", false)) {
+            huidigSaldo();
+            // Sla op dat er voor het eerst de app opgestart is:
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean("firstTime", true);
+            editor.commit();
+        }
+
         /*
         Nu volgen wat 'test-invullingen' van de database ter controle van de diagrammen en de spinner:
         Deze dingen staan nu in de onCreate methode, dus als je ze wil veranderen moet je eerst de
         app herinstalleren en weer opnieuw opstarten. Dit deel kan je wegdenken.
-        */
+        *//*
         db.addAmount(12.0, "uit", "categorie1", 1990, 2, 1);
         db.addAmount(23.0, "uit", "categorie1", 1990, 2, 2);
         db.addAmount(1.0, "uit", "categorie2", 1990, 2, 3);
@@ -113,43 +130,72 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
 
         db.addCategory("categorie1");
         db.addCategory("categorie2");
-        db.addCategory("categorie3");
+        db.addCategory("categorie3");*/
 
         /*
         Cursor hoort bij SQL, en selecteert een tabel
         Het spinner object wordt gekoppeld aan de spinner in de layout d.m.v. ID
         Vervolgens wordt de spinner aangemaakt en ingevuld op basis van de cursor.
         */
-        Cursor mndJaar = db.getMaandJaar();
-        spinner = (Spinner) findViewById(R.id.month_spinner);
-        makeSpinner(spinner,mndJaar);
+        else {
+            Cursor mndJaar = db.getMaandJaar();
+            spinner = (Spinner) findViewById(R.id.month_spinner);
+            makeSpinner(spinner, mndJaar);
 
-        listView = (ListView) findViewById(R.id.list);
-        setupListView(listView);
+            listView = (ListView) findViewById(R.id.list);
+            setupListView(listView);
 
-        // Deze worden gebruikt voor de datasets van de piechart. Ze worden gevuld in readUitIn
-        colors = new ArrayList<>();
-        bedragListInkomst = new ArrayList<>();
-        categorieListInkomst = new ArrayList<>();
-        bedragListUitgave = new ArrayList<>();
-        categorieListUitgave = new ArrayList<>();
+            // Deze worden gebruikt voor de datasets van de piechart. Ze worden gevuld in readUitIn
+            colors = new ArrayList<>();
+            bedragListInkomst = new ArrayList<>();
+            categorieListInkomst = new ArrayList<>();
+            bedragListUitgave = new ArrayList<>();
+            categorieListUitgave = new ArrayList<>();
 
-        // De kleuren die de cirkeldiagrammen gebruiken worden hier aangemaakt:
-        addColors();
+            // De kleuren die de cirkeldiagrammen gebruiken worden hier aangemaakt:
+            addColors();
 
 
-        // Leest de totale in en uitgaven in en verwerkt deze in de piecharts
-        readUitIn("in", bedragListInkomst, categorieListInkomst);
-        readUitIn("uit", bedragListUitgave, categorieListUitgave);
+            // Leest de totale in en uitgaven in en verwerkt deze in de piecharts
+            readUitIn("in", bedragListInkomst, categorieListInkomst);
+            readUitIn("uit", bedragListUitgave, categorieListUitgave);
 
-        // De volgende functie vult de cirkeldiagrammen:
-        setUpCharts();
-        // De volgende functie vult het staafdiagram:
-        //setUpBarChart();
+            // De volgende functie vult de cirkeldiagrammen:
+            setUpCharts();
+            // De volgende functie vult het staafdiagram:
+            //setUpBarChart();
+        }
     }
 
+    private void huidigSaldo() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
+        alert.setTitle("Geld Manager");
+        alert.setMessage("Geef uw huidige saldo:");
 
+        // Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                int saldo = Integer.parseInt(input.getText().toString());
+                int dag = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+                int maand = Calendar.getInstance().get(Calendar.MONTH)+1;
+                int jaar = Calendar.getInstance().get(Calendar.YEAR);
+                if (saldo >= 0) {
+                    db.addAmount(saldo, "in", "Saldo", jaar, maand, dag);
+                    toastMessage("Saldo van " + saldo + " euro opgeslagen");
+                }
+                else {
+                    int saldoMin = Math.abs(saldo);
+                    db.addAmount(saldoMin, "uit", "Saldo", jaar, maand, dag);
+                    toastMessage("Saldo van -" + saldo + " euro opgeslagen");
+                }
+            }
+        });
+        alert.show();
+    }
 
 
     // Array van strings met de maanden, om makkelijk naar te kunnen verwijzen.
