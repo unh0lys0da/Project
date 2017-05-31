@@ -15,9 +15,10 @@
         android:id="@+id/goToSettings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:text="Back"
         android:layout_alignParentTop="true"
-        android:text="Back" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="23dp" />
 
     <Spinner
         android:id="@+id/categorieSpinner"
@@ -32,9 +33,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Creëer Nieuwe Categorie"
-        android:layout_marginTop="19dp"
+        android:layout_marginTop="24dp"
         android:layout_below="@+id/nieuweCategorieNaam"
-        android:layout_toEndOf="@+id/goToSettings" />
+        android:layout_toEndOf="@+id/goToSettings"
+        android:onClick="maakCategorie"/>
 
     <EditText
         android:id="@+id/nieuweCategorieNaam"
@@ -43,9 +45,9 @@
         android:ems="10"
         android:inputType="text"
         android:text="..."
-        android:layout_marginTop="137dp"
+        android:layout_marginTop="140dp"
         android:layout_below="@+id/categorieSpinner"
-        android:layout_alignStart="@+id/nieuweCategorie" />
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/hernoemCategorie"
@@ -54,15 +56,17 @@
         android:layout_marginTop="19dp"
         android:text="Hernoem Categorie"
         android:layout_below="@+id/nieuweCategorie"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="hernoemCategorie" />
 
     <Button
         android:id="@+id/verwijderCategorie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:text="Verwijder Categorie"
+        android:onClick="verwijderCategorie"
         android:layout_below="@+id/hernoemCategorie"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="23dp"
-        android:text="Verwijder Categorie" />
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

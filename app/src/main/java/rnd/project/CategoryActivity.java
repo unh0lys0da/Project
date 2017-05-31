@@ -1,5 +1,7 @@
 package rnd.project;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -44,4 +46,13 @@ public class CategoryActivity extends AppCompatActivity {
     private void toastMessage (String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
+
+    /*
+    private void hernoemCategorie () {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "UPDATE " + spinner + " FROM table_name " +
+                "WHERE categorie = " + nieuweCategorieNaam.getText();
+        Cursor data = db.rawQuery(query,null);
+        return data;
+    }*/
 }

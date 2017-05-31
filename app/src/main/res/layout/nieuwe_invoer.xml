@@ -175,7 +175,8 @@
         android:textSize="24sp"
         android:onClick="submitEntry"
         android:layout_below="@+id/maandCheck"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignStart="@+id/elkeText"
+        android:layout_alignEnd="@+id/elkeText" />
 
     <Button
         android:id="@+id/nieuweCategorie"

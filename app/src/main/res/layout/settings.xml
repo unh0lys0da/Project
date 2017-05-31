@@ -28,11 +28,11 @@
         android:id="@+id/categorieButton"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="121dp"
         android:text="@string/cat_man"
+        android:textSize="18sp"
         android:layout_below="@+id/homeButton"
-        android:layout_centerHorizontal="true"
-        android:textSize="18sp"/>
+        android:layout_alignStart="@+id/mutatieButton" />
     //Periodieke Mutaties button
     <Button
         android:id="@+id/mutatieButton"
