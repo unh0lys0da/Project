@@ -76,6 +76,9 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         public List<BarEntry> barListInkomst;
         public List<BarEntry> barListUitgave;
 
+        //Voor het opslaan van een boolean over of de app voor het eerst gestart is of niet
+        public SharedPreferences prefs;
+
 
 
         // Dit wordt het drop-down menu waar we de maand selecteren
@@ -99,15 +102,11 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         db = new DatabaseHelper(this);
 
         //Voor het opslaan van een boolean voor of de app voor het eerst opgestart wordt of niet
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         //Checkt of dit de eerste run van de applicatie is en zo ja, dan wordt om huidig saldo gevraagd
         if (!prefs.getBoolean("firstTime", false)) {
             huidigSaldo();
-            // Sla op dat er voor het eerst de app opgestart is:
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putBoolean("firstTime", true);
-            editor.commit();
         }
 
         /*
@@ -167,30 +166,49 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         }
     }
 
+    //Alleen voor wanneer de app voor het eerste gestart wordt; vraagt om huidig saldo
     private void huidigSaldo() {
+        //Maakt een nieuw popup window met een editText aan
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-
         alert.setTitle("Geld Manager");
-        alert.setMessage("Geef uw huidige saldo:");
-
-        // Set an EditText view to get user input
+        alert.setMessage("Geef uw huidige saldo in euro's op:");
         final EditText input = new EditText(this);
         alert.setView(input);
 
+        //Verwerk input wanneer op OK geklikt wordt
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                int saldo = Integer.parseInt(input.getText().toString());
+                //huidige datum wordt vastgesteld
                 int dag = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
                 int maand = Calendar.getInstance().get(Calendar.MONTH)+1;
                 int jaar = Calendar.getInstance().get(Calendar.YEAR);
-                if (saldo >= 0) {
-                    db.addAmount(saldo, "in", "Saldo", jaar, maand, dag);
-                    toastMessage("Saldo van " + saldo + " euro opgeslagen");
+
+                //Wordt geprobeerd de input in een double te zetten. Wanneer dit niet kan (door
+                // verkeerde input of door geen input te geven) wordt deze functie opnieuw aangeroepen in de catch
+                try {
+                    double saldo = Double.parseDouble(input.getText().toString());
+                    //Zet het bedrag in de database bij inkomsten als er het een positief getal is of gelijk aan 0 en anders in uitgaven
+                    //De huidige datum wordt gebruikt en het bedrag wordt in categorie Saldo gezet
+                    if (saldo >= 0) {
+                        db.addAmount(saldo, "in", "Saldo", jaar, maand, dag);
+                        // Sla op dat er voor het eerst de app succesvol opgestart is:
+                        SharedPreferences.Editor editor = prefs.edit();
+                        editor.putBoolean("firstTime", true);
+                        editor.commit();
+                        toastMessage("Saldo van " + saldo + " euro opgeslagen");
+                    } else {
+                        double saldoMin = Math.abs(saldo);
+                        db.addAmount(saldoMin, "uit", "Saldo", jaar, maand, dag);
+                        // Sla op dat er voor het eerst de app succesvol opgestart is:
+                        SharedPreferences.Editor editor = prefs.edit();
+                        editor.putBoolean("firstTime", true);
+                        editor.commit();
+                        toastMessage("Saldo van -" + saldo + " euro opgeslagen");
+                    }
                 }
-                else {
-                    int saldoMin = Math.abs(saldo);
-                    db.addAmount(saldoMin, "uit", "Saldo", jaar, maand, dag);
-                    toastMessage("Saldo van -" + saldo + " euro opgeslagen");
+                catch (NumberFormatException e) {
+                    toastMessage("Ongeldige invoer");
+                    huidigSaldo();
                 }
             }
         });

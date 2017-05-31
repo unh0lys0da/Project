@@ -135,8 +135,8 @@ public class InvoerActivity extends AppCompatActivity implements AdapterView.OnI
 
         // Voer de data in in de database:
         boolean insert = db.addAmount(bedrag,uitin,itemSelected,jaar,maand,dag);
-        if (insert) toastMessage("Insert correct");
-        else toastMessage("Insert went wrong");
+        if (insert) toastMessage("Bedrag toegevoegd");
+        else toastMessage("Er ging iets mis met het toevoegen van het bedrag");
     }
 
     private double parseBedrag(String s) {
