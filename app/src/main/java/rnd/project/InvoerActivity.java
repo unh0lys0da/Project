@@ -127,8 +127,8 @@ public class InvoerActivity extends AppCompatActivity implements AdapterView.OnI
                 Calendar.getInstance().get(Calendar.DAY_OF_MONTH) :
                 Integer.parseInt(dagInput.getText().toString());
         int maand = isEmpty(maandInput) ?
-                Calendar.getInstance().get(Calendar.MONTH) :
-                Integer.parseInt(maandInput.getText().toString()) + 1;
+                Calendar.getInstance().get(Calendar.MONTH)+1 :
+                Integer.parseInt(maandInput.getText().toString());
         int jaar = isEmpty(jaarInput) ?
                 Calendar.getInstance().get(Calendar.YEAR) :
                 Integer.parseInt(jaarInput.getText().toString());
