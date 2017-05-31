@@ -32,7 +32,8 @@
         android:text="@string/cat_man"
         android:textSize="18sp"
         android:layout_below="@+id/homeButton"
-        android:layout_alignStart="@+id/mutatieButton" />
+        android:layout_alignStart="@+id/mutatieButton"
+        android:onClick="gotoActivityCategory"/>
     //Periodieke Mutaties button
     <Button
         android:id="@+id/mutatieButton"
@@ -42,7 +43,8 @@
         android:layout_marginTop="10dp"
         android:layout_below="@+id/categorieButton"
         android:layout_centerHorizontal="true"
-        android:textSize="18sp"/>
+        android:textSize="18sp"
+        android:onClick="gotoPeriodiekeMutaties"/>
     //Maand Bewerken button
     <Button
         android:id="@+id/bewerkenButton"

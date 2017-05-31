@@ -39,4 +39,18 @@ public class SettingsActivity extends AppCompatActivity {
         home = new Intent(getBaseContext(),MainActivity.class);
         startActivity(home);
     }
+
+    public void gotoActivityCategory (View v)
+    {
+        Intent home;
+        home = new Intent(getBaseContext(),CategoryActivity.class);
+        startActivity(home);
+    }
+
+    public void gotoPeriodiekeMutaties (View v)
+    {
+        Intent home;
+        home = new Intent(getBaseContext(),PeriodiekeMutatiesActivity.class);
+        startActivity(home);
+    }
 }
