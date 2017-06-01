@@ -8,6 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
+import java.text.DateFormatSymbols;
 
 /**
  * Created by:
@@ -22,13 +27,21 @@ import android.widget.ListView;
 
 public class LijstActivity extends AppCompatActivity {
     // #aandacht
+    //Deze activity laat de gehele lijst aan in- en uitgaven in een maand zien
     ListView listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lijst);
+        Bundle b = getIntent().getExtras(); //Voor het ophalen van de meegegeven maand en jaar int
+        int month = b.getInt("monthKey");
+        int year = b.getInt("yearKey");
+        TextView textView = (TextView) findViewById(R.id.textView);
+        String maand = new DateFormatSymbols().getMonths()[month-1];
+        String text = maand + " " + year;
+        textView.setText(text);
         listView = (ListView) findViewById(R.id.list);
-        setupListView(listView);
+        setupListView(listView, month, year);
     }
     //Gets user to main activity
     public void gotoHome(View v){
@@ -43,12 +56,11 @@ public class LijstActivity extends AppCompatActivity {
         startActivity(settings);
     }
 
-    private void setupListView(ListView listView) {
+    //Haalt de gegevens uit de database in zet ze in de listView
+    private void setupListView(ListView listView, int month, int year) {
         DatabaseHelper db;
         db = new DatabaseHelper(this);
-        Bundle b = getIntent().getExtras();
-        int month = b.getInt("monthKey");
-        int year = b.getInt("yearKey");
+
         /*
            Column 0: Bedrag
            Column 1: Uit of in

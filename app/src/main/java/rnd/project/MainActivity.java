@@ -316,9 +316,11 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
 
     public void gotoLijst(View v){
         /*
-            Deze moet nog gekoppeld worden aan de lijst onder in beeld. Als hier op wordt gedrukt
-            verschijnt er een full-screen lijst.
+            Zorgt ervoor dat wanneer er op de lijst onderin het hoofdscherm geklikt wordt,
+            men de gehele lijst in een nieuwe view ziet, door naar LijstActivity te gaan
          */
+
+        //kijkt op welke maand de spinner (en dus de lijst) staat
         String string = (String) spinner.getItemAtPosition(0);
         MonthYear my = new MonthYear(0,0);
         parseMonthYearFromString(my, string);
@@ -326,8 +328,10 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         String yearKey = "yearKey";
         int month = my.getMonth();
         String monthKey = "monthKey";
+
         Intent lijst;
         lijst = new Intent(getBaseContext(),LijstActivity.class);
+        //Geven de maand en jaar waar de lijst op staat mee aan de activity:
         lijst.putExtra(yearKey, year);
         lijst.putExtra(monthKey, month);
         startActivity(lijst);
