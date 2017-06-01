@@ -7,7 +7,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:text="@string/lijst"
-        android:textSize="32sp"
+        android:textSize="28sp"
         android:gravity="center"
         android:id="@+id/textView"
         android:layout_alignBottom="@+id/homeButton"
@@ -29,15 +29,24 @@
         android:layout_alignParentEnd="true"
         android:text="@string/settings"
         android:onClick="gotoSettings" />
-    //Lijst voor inkomsten en uitgaven
-    <ListView
-        android:id="@android:id/list"
-        android:layout_width="match_parent"
+    <!--scrollview voor weergave bedragen-->
+    <ScrollView
+        android:id="@+id/scrollCat"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/textView">
-    </ListView>
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView"
+        android:fillViewport="true">
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/textView">
+        </ListView>
+    </ScrollView>
 
 
 
