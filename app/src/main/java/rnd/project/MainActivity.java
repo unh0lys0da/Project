@@ -143,8 +143,14 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
 
             listView = (ListView) findViewById(R.id.list);
             setupListView(listView);
+            //OnClickListener voor gotoLijst functie
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+                    gotoLijst(v);
+                }
+            });
 
-            // Deze worden gebruikt voor de datasets van de piechart. Ze worden gevuld in readUitIn
+                // Deze worden gebruikt voor de datasets van de piechart. Ze worden gevuld in readUitIn
             colors = new ArrayList<>();
             bedragListInkomst = new ArrayList<>();
             categorieListInkomst = new ArrayList<>();
@@ -313,8 +319,17 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
             Deze moet nog gekoppeld worden aan de lijst onder in beeld. Als hier op wordt gedrukt
             verschijnt er een full-screen lijst.
          */
+        String string = (String) spinner.getItemAtPosition(0);
+        MonthYear my = new MonthYear(0,0);
+        parseMonthYearFromString(my, string);
+        int year = my.getYear();
+        String yearKey = "yearKey";
+        int month = my.getMonth();
+        String monthKey = "monthKey";
         Intent lijst;
         lijst = new Intent(getBaseContext(),LijstActivity.class);
+        lijst.putExtra(yearKey, year);
+        lijst.putExtra(monthKey, month);
         startActivity(lijst);
     }
 

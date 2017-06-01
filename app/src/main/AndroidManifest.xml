@@ -18,6 +18,7 @@
         <activity android:name=".InvoerActivity"></activity>
         <activity android:name=".SettingsActivity"></activity>
         <activity android:name=".CategoryActivity"></activity>
+        <activity android:name=".LijstActivity"></activity>
     </application>
 
 </manifest>
