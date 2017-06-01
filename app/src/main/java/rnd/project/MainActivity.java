@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -106,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
 
         //Checkt of dit de eerste run van de applicatie is en zo ja, dan wordt om huidig saldo gevraagd
         if (!prefs.getBoolean("firstTime", false)) {
+            db.addCategory("Overig..");
             huidigSaldo();
         }
 
@@ -179,6 +181,7 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         alert.setTitle("Geld Manager");
         alert.setMessage("Geef uw huidige saldo in euro's op:");
         final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         alert.setView(input);
 
         //Verwerk input wanneer op OK geklikt wordt
@@ -274,7 +277,7 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         String[] inUitArray = new String[res.getCount()];
         for(int i=0; res.moveToNext(); i++) {
             String inuit = res.getString(1).equals("in") ? "+" : "-";
-            String row = inuit + res.getString(0) + "\t" + res.getString(2) + "\t" + res.getInt(3) + "-" + month + "-" + year;
+            String row = inuit + res.getString(0) + "\t\t\t\t" + res.getString(2) + "\t\t\t\t" + res.getInt(3) + "-" + month + "-" + year;
             inUitArray[i] = row;
         }
         ArrayAdapter<String> listArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, inUitArray);

@@ -108,7 +108,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_4_JAAR + " FROM " +
                 TABLE_NAME + " WHERE " +
                 COLUMN_2_UITOFIN + " != " + "\"empty\"" + " ORDER BY " +
-                COLUMN_4_JAAR + " DESC";
+                COLUMN_4_JAAR + " DESC, " +
+                COLUMN_5_MAAND + " DESC";
         Cursor data = db.rawQuery(query, null);
 
         return data;
