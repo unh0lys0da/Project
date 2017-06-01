@@ -186,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
             public void onClick(DialogInterface dialog, int whichButton) {
                 //huidige datum wordt vastgesteld
                 int dag = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-                int maand = Calendar.getInstance().get(Calendar.MONTH)+1;
+                int maand = Calendar.getInstance().get(Calendar.MONTH);
                 int jaar = Calendar.getInstance().get(Calendar.YEAR);
 
                 //Wordt geprobeerd de input in een double te zetten. Wanneer dit niet kan (door
