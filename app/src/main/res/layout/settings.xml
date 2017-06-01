@@ -22,48 +22,40 @@
         android:textSize="32sp"
         android:gravity="center"
         android:layout_above="@+id/categorieButton"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:id="@+id/textView3" />
     //Categorie Manager button
     <Button
         android:id="@+id/categorieButton"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="121dp"
+        android:layout_marginTop="113dp"
         android:text="@string/cat_man"
         android:textSize="18sp"
+        android:onClick="gotoActivityCategory"
         android:layout_below="@+id/homeButton"
-        android:layout_alignStart="@+id/mutatieButton"
-        android:onClick="gotoActivityCategory"/>
+        android:layout_alignStart="@+id/bewerkenButton" />
     //Periodieke Mutaties button
-    <Button
-        android:id="@+id/mutatieButton"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="@string/per_mut"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/categorieButton"
-        android:layout_centerHorizontal="true"
-        android:textSize="18sp"
-        android:onClick="gotoPeriodiekeMutaties"/>
     //Maand Bewerken button
+
     <Button
         android:id="@+id/bewerkenButton"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="@string/maand_bew"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/mutatieButton"
-        android:layout_centerHorizontal="true"
-        android:textSize="18sp"/>
+        android:layout_marginTop="51dp"
+        android:textSize="18sp"
+        android:layout_below="@+id/textView3"
+        android:layout_centerHorizontal="true" />
     //Maand Exporteren button
     <Button
         android:id="@+id/exportButton"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="@string/maand_ex"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/bewerkenButton"
-        android:layout_centerHorizontal="true"
-        android:textSize="18sp"/>
+        android:layout_marginTop="16dp"
+        android:textSize="18sp"
+        android:layout_below="@+id/categorieButton"
+        android:layout_alignStart="@+id/categorieButton" />
 
 </RelativeLayout>

@@ -47,10 +47,4 @@ public class SettingsActivity extends AppCompatActivity {
         startActivity(home);
     }
 
-    public void gotoPeriodiekeMutaties (View v)
-    {
-        Intent home;
-        home = new Intent(getBaseContext(),PeriodiekeMutatiesActivity.class);
-        startActivity(home);
-    }
 }
