@@ -255,4 +255,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         return (db.delete(TABLE_NAME_FUT, COLUMN_5_MAAND + "=" + maand + " AND " + COLUMN_4_JAAR + "=" + jaar, null) > 0);
     }
+
+    public void deleteEntry(long id) {
+        String string = String.valueOf(id);
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM Bedragen WHERE ID = '" + string + "'");
+    }
 }
