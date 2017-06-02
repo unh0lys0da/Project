@@ -10,10 +10,8 @@
         android:textSize="28sp"
         android:gravity="center"
         android:id="@+id/textView"
-        android:layout_alignBottom="@+id/homeButton"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="11dp"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
     //Home button
     <Button
         android:id="@+id/homeButton"

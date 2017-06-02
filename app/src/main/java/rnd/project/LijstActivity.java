@@ -6,9 +6,11 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -42,6 +44,9 @@ public class LijstActivity extends AppCompatActivity {
         textView.setText(text);
         listView = (ListView) findViewById(R.id.list);
         setupListView(listView, month, year);
+
+
+
     }
     //Gets user to main activity
     public void gotoHome(View v){
@@ -58,7 +63,7 @@ public class LijstActivity extends AppCompatActivity {
 
     //Haalt de gegevens uit de database in zet ze in de listView
     private void setupListView(ListView listView, int month, int year) {
-        DatabaseHelper db;
+        final DatabaseHelper db;
         db = new DatabaseHelper(this);
 
         /*
@@ -76,5 +81,25 @@ public class LijstActivity extends AppCompatActivity {
         }
         ArrayAdapter<String> listArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, inUitArray);
         listView.setAdapter(listArrayAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String longstring = Long.toString(l);
+                toastMessage(longstring);
+                db.deleteEntry(l);
+            }
+        });
+
+
+
     }
+    private void toastMessage (String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+
+
 }
+
+
