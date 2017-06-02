@@ -1,9 +1,12 @@
 package rnd.project;
 
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -87,17 +90,33 @@ public class LijstActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
                     String str = (String) adapterView.getItemAtPosition(position);
-                    int id = parseId(str);
-                    db.deleteEntry(Integer.toString(id));
-
-
+                    final int id = parseId(str);
+                AlertDialog.Builder builder;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    builder = new AlertDialog.Builder(LijstActivity.this, android.R.style.Theme_Material_Dialog_Alert);
+                } else {
+                    builder = new AlertDialog.Builder(LijstActivity.this);
+                }
+                builder.setTitle("Delete entry")
+                        .setMessage("Are you sure you want to delete this entry?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                db.deleteEntry(Integer.toString(id));
+                                toastMessage("Bedrag verwijderd");
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
 
             }
         });
-
-
-
     }
+
 
     public int parseId(String str) {
         String[] strr = str.split(" ");
