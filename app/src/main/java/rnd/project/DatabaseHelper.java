@@ -234,4 +234,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //        CAT_COLUMN_1_CATEGORIES + " = \"" + cat + "\"";
         //db.execSQL(delete_query);
     }
+
+    public Cursor getQueryFut( int maand, int jaar ) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String QUERY = "SELECT " +
+                COLUMN_1_BEDRAG + "," +
+                COLUMN_2_UITOFIN + "," +
+                COLUMN_3_CATEGORIE + "," +
+                COLUMN_4_JAAR + "," +
+                COLUMN_5_MAAND + "," +
+                COLUMN_6_DAG + " FROM " +
+                TABLE_NAME_FUT + " WHERE " +
+                COLUMN_5_MAAND + " = " + maand + " AND " +
+                COLUMN_4_JAAR + " = " + jaar;
+        Cursor data = db.rawQuery(QUERY,null);
+        return data;
+    }
+
+    public boolean removeMonthYearFut(int maand, int jaar) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return (db.delete(TABLE_NAME_FUT, COLUMN_5_MAAND + "=" + maand + " AND " + COLUMN_4_JAAR + "=" + jaar, null) > 0);
+    }
 }

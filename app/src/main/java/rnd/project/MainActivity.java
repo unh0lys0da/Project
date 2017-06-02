@@ -142,6 +142,9 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         */
         else {
             Cursor mndJaar = db.getMaandJaar();
+
+            checkFutureDb();
+
             spinner = (Spinner) findViewById(R.id.month_spinner);
             makeSpinner(spinner, mndJaar);
 
@@ -173,6 +176,32 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
             setUpCharts();
             // De volgende functie vult het staafdiagram:
             //setUpBarChart();
+        }
+    }
+
+    private void checkFutureDb() {
+        Calendar calendar = Calendar.getInstance();
+        int maand = calendar.get(Calendar.MONTH);
+        int jaar = calendar.get(Calendar.YEAR);
+
+        Cursor data = db.getQueryFut(maand, jaar);
+        if( data.getCount() > 0) {
+            copyToCurrent(data);
+            db.removeMonthYearFut(maand, jaar);
+        }
+    }
+
+    private void copyToCurrent(Cursor data) {
+        String amt, cat, uitin;
+        int dag, maand, jaar;
+        while(data.moveToNext()) {
+            amt = data.getString(0);
+            uitin = data.getString(1);
+            cat = data.getString(2);
+            jaar = data.getInt(3);
+            maand = data.getInt(4);
+            dag = data.getInt(5);
+            db.addAmount(Double.parseDouble(amt),uitin,cat,jaar,maand,dag);
         }
     }
 
