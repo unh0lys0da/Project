@@ -79,18 +79,17 @@ public class LijstActivity extends AppCompatActivity {
             String row = inuit + res.getString(0) + "\t" + res.getString(2) + "\t" + res.getInt(3) + "-" + month + "-" + year + " ID: " + res.getInt(4);
             inUitArray[i] = row;
         }
-        ArrayAdapter<String> listArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, inUitArray);
+        final ArrayAdapter<String> listArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, inUitArray);
         listView.setAdapter(listArrayAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
-
-
                     String str = (String) adapterView.getItemAtPosition(position);
-                    String id = str.substring(str.length()-1);
-                    db.deleteEntry(id);
+                    int id = parseId(str);
+                    db.deleteEntry(Integer.toString(id));
+
 
 
             }
@@ -100,11 +99,12 @@ public class LijstActivity extends AppCompatActivity {
 
     }
 
-    private int parseId(String str) {
+    public int parseId(String str) {
         String[] strr = str.split(" ");
         int id = Integer.parseInt(strr[strr.length-1]);
         return id;
     }
+
     private void toastMessage (String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
