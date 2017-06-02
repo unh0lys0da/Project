@@ -19,6 +19,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by:
@@ -42,6 +43,8 @@ public class InvoerActivity extends AppCompatActivity implements AdapterView.OnI
     private boolean wekelijks;
     private boolean maandelijks;
     private boolean opdeel;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,10 +148,57 @@ public class InvoerActivity extends AppCompatActivity implements AdapterView.OnI
                 if (itemSelected == "leeg") {itemSelected = "Overige..";}
                 // Voer de data in in de database:
                 boolean insert = db.addAmount(bedrag, uitin, itemSelected, jaar, maand, dag);
-                if (insert) toastMessage("Bedrag toegevoegd");
+                if (insert) {
+                    if(herhaald) {
+                        repeatInUit(bedrag,uitin, itemSelected, jaar, maand, dag);
+                    }
+                    toastMessage("Bedrag toegevoegd");
+                }
                 else toastMessage("Er ging iets mis met het toevoegen van het bedrag");
             }
         }
+
+    }
+
+    private void repeatInUit(double bedrag, String uitin, String item, int jaar, int maand, int dag) {
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.set(Calendar.YEAR, jaar);
+        calendar.set(Calendar.MONTH, maand);
+        calendar.set(Calendar.DAY_OF_MONTH, dag);
+        if(dagelijks)
+            while (calendar.get(Calendar.YEAR) < jaar + 2) {
+                calendar.add(Calendar.DAY_OF_YEAR,1);
+                if(calendar.get(Calendar.MONTH) == maand && calendar.get(Calendar.YEAR) == jaar) {
+                    db.addAmount(bedrag, uitin, item, jaar, maand, calendar.get(Calendar.DAY_OF_MONTH));
+                }
+                else {
+                    db.addAmountFut(bedrag, uitin, item, jaar, maand, calendar.get(Calendar.DAY_OF_MONTH));
+                }
+            }
+        calendar = new GregorianCalendar();
+        calendar.set(Calendar.YEAR, jaar);
+        calendar.set(Calendar.MONTH, maand);
+        calendar.set(Calendar.DAY_OF_MONTH, dag);
+        if(wekelijks)
+            while (calendar.get(Calendar.YEAR) < jaar + 2) {
+                calendar.add(Calendar.DAY_OF_YEAR,7);
+                if(calendar.get(Calendar.MONTH) == maand && calendar.get(Calendar.YEAR) == jaar) {
+                    db.addAmount(bedrag, uitin, item, jaar, maand, calendar.get(Calendar.DAY_OF_MONTH));
+                }
+                else {
+                    db.addAmountFut(bedrag, uitin, item, jaar, maand, calendar.get(Calendar.DAY_OF_MONTH));
+                }
+            }
+        if(maandelijks)
+            while (calendar.get(Calendar.YEAR) < jaar + 5) {
+                calendar.add(Calendar.MONTH,1);
+                if(calendar.get(Calendar.MONTH) == maand && calendar.get(Calendar.YEAR) == jaar) {
+                    db.addAmount(bedrag, uitin, item, jaar, calendar.get(Calendar.MONTH), dag);
+                }
+                else {
+                    db.addAmountFut(bedrag, uitin, item, jaar, calendar.get(Calendar.MONTH), dag);
+                }
+            }
     }
 
     //Controlleer of een meegegeven datum geldig is. Return false bij ongeldige datum
@@ -180,11 +230,11 @@ public class InvoerActivity extends AppCompatActivity implements AdapterView.OnI
             case R.id.dagCheck:
                 dagelijks = !dagelijks;
                 break;
-            case R.id.maandCheck:
+            case R.id.weekCheck:
                 wekelijks = !wekelijks;
                 break;
-            case R.id.opdeelCheck:
-                opdeel = !opdeel;
+            case R.id.maandCheck:
+                maandelijks = !maandelijks;
                 break;
         }
     }

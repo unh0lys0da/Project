@@ -99,7 +99,7 @@
         android:ems="10"
         android:text="@string/Categorie"
         android:textSize="24sp"
-        android:layout_above="@+id/opdeelCheck"
+        android:layout_above="@+id/nieuweCategorie"
         android:layout_alignStart="@+id/datumText" />
     <CheckBox
         android:id="@+id/herhaaldCheck"
@@ -107,17 +107,8 @@
         android:layout_height="wrap_content"
         android:text="@string/Herhaald"
         android:layout_marginTop="14dp"
-        android:layout_below="@+id/opdeelCheck"
-        android:layout_alignStart="@+id/opdeelCheck"
-        android:onClick="onCheckBoxClicked"/>
-    <CheckBox
-        android:id="@+id/dagCheck"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Dag"
-        android:layout_alignBaseline="@+id/elkeText"
-        android:layout_alignBottom="@+id/elkeText"
-        android:layout_toEndOf="@+id/herhaaldCheck"
+        android:layout_below="@+id/nieuweCategorie"
+        android:layout_alignStart="@+id/nieuweCategorie"
         android:onClick="onCheckBoxClicked"/>
     <TextView
         android:id="@+id/elkeText"
@@ -130,6 +121,15 @@
         android:layout_alignStart="@+id/herhaaldCheck"
         android:layout_marginStart="7dp"
         android:layout_marginTop="18dp"
+        android:onClick="onCheckBoxClicked"/>
+    <CheckBox
+        android:id="@+id/dagCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Dag"
+        android:layout_alignBaseline="@+id/elkeText"
+        android:layout_alignBottom="@+id/elkeText"
+        android:layout_toEndOf="@+id/herhaaldCheck"
         android:onClick="onCheckBoxClicked"/>
     <CheckBox
         android:id="@+id/weekCheck"
@@ -149,15 +149,7 @@
         android:layout_below="@+id/weekCheck"
         android:layout_alignStart="@+id/weekCheck"
         android:onClick="onCheckBoxClicked"/>
-    <CheckBox
-        android:id="@+id/opdeelCheck"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Opdelen"
-        android:layout_marginTop="7dp"
-        android:layout_below="@+id/spinner"
-        android:layout_alignStart="@+id/categorieText"
-        android:onClick="onCheckBoxClicked"/>
+
     <Button
         android:id="@+id/homeButton"
         android:layout_width="wrap_content"
@@ -184,9 +176,9 @@
         android:layout_height="wrap_content"
         android:text="Nieuwe Categorie"
         android:onClick="nieuweCategorie"
-        android:layout_alignBaseline="@+id/herhaaldCheck"
-        android:layout_alignBottom="@+id/herhaaldCheck"
-        android:layout_alignEnd="@+id/categorieText" />
+        android:layout_marginTop="7dp"
+        android:layout_below="@+id/spinner"
+        android:layout_alignStart="@+id/categorieText" />
 
 </RelativeLayout>
     </ScrollView>
