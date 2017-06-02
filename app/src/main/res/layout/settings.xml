@@ -45,6 +45,7 @@
         android:text="@string/maand_bew"
         android:layout_marginTop="51dp"
         android:textSize="18sp"
+        android:onClick="gotoMaandBewerken"
         android:layout_below="@+id/textView3"
         android:layout_centerHorizontal="true" />
     //Maand Exporteren button

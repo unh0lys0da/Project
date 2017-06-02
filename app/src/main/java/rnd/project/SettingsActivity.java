@@ -20,7 +20,7 @@ import java.util.ArrayList;
  */
 
 public class SettingsActivity extends AppCompatActivity {
-    // Settings moet nog vorm worden gegeven #aandacht
+
     DatabaseHelper db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +45,12 @@ public class SettingsActivity extends AppCompatActivity {
         Intent home;
         home = new Intent(getBaseContext(),CategoryActivity.class);
         startActivity(home);
+    }
+
+    public void gotoMaandBewerken (View v) {
+        Intent maand;
+        maand = new Intent(getBaseContext(),MaandBewerkenActivity.class);
+        startActivity(maand);
     }
 
 }

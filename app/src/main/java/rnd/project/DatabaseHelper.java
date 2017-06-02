@@ -132,7 +132,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public Cursor getMaandJaar() {
-        // Wat returnt deze precies? #aandacht
+        // Returnt de opgeslagen maanden per jaar
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT DISTINCT " +
                 COLUMN_5_MAAND + "," +
