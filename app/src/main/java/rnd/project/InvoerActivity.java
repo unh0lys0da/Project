@@ -29,7 +29,7 @@ import java.util.GregorianCalendar;
  * Auke Rosier
  * Niels van Velzen
  * Douwe Huijsmans
- * on 17/05/2017.
+ * on 17/05/2017
  */
 
 public class InvoerActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
