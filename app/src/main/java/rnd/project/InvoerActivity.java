@@ -56,9 +56,9 @@ public class InvoerActivity extends AppCompatActivity implements AdapterView.OnI
         dagelijks = false;
         wekelijks = false;
         maandelijks = false;
-        dagEnable = true;
-        weekEnable = true;
-        maandEnable = true;
+        dagEnable = false;
+        weekEnable = false;
+        maandEnable = false;
         itemSelected = "leeg";
 
         super.onCreate(savedInstanceState);
@@ -232,6 +232,16 @@ public class InvoerActivity extends AppCompatActivity implements AdapterView.OnI
         switch(v.getId()) {
             case R.id.herhaaldCheck:
                 herhaald = !herhaald;
+                dagEnable = !dagEnable;
+                weekEnable = !weekEnable;
+                maandEnable = !maandEnable;
+                CheckBox dgCheck = (CheckBox) findViewById(R.id.dagCheck);
+                dgCheck.setEnabled(dagEnable);
+                CheckBox wkCheck = (CheckBox) findViewById(R.id.weekCheck);
+                wkCheck.setEnabled(weekEnable);
+                CheckBox mndCheck = (CheckBox) findViewById(R.id.maandCheck);
+                mndCheck.setEnabled(maandEnable);
+
                 break;
             case R.id.dagCheck:
                 dagelijks = !dagelijks;
