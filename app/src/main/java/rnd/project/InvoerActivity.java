@@ -236,9 +236,6 @@ public class InvoerActivity extends AppCompatActivity implements AdapterView.OnI
             case R.id.maandCheck:
                 maandelijks = !maandelijks;
                 break;
-            case R.id.opdeelCheck:
-                opdeel = !opdeel;
-                break;
         }
     }
 
