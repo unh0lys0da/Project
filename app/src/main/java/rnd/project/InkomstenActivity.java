@@ -122,7 +122,10 @@ public class InkomstenActivity extends AppCompatActivity {
         colors.add(Color.DKGRAY);
         colors.add(Color.CYAN);
         colors.add(Color.MAGENTA);
-        //Zijn voorlopig maar 5 kleuren, kan altijd makkelijk meer doen, wil ook liever hex-based kleuren gaan gebruiken.
+        colors.add(Color.GREEN);
+        colors.add(Color.RED);
+        colors.add(Color.YELLOW);
+        //Zijn voorlopig maar 8 kleuren, kan altijd makkelijk meer doen, wil ook liever hex-based kleuren gaan gebruiken.
     }
 
     //Gets Bedrag per Categorie for all uitgaven
