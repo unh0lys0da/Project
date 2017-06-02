@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -42,7 +43,10 @@ public class InvoerActivity extends AppCompatActivity implements AdapterView.OnI
     private boolean dagelijks;
     private boolean wekelijks;
     private boolean maandelijks;
-    private boolean opdeel;
+    private boolean dagEnable;
+
+    private boolean weekEnable;
+    private boolean maandEnable;
 
 
 
@@ -52,7 +56,9 @@ public class InvoerActivity extends AppCompatActivity implements AdapterView.OnI
         dagelijks = false;
         wekelijks = false;
         maandelijks = false;
-        opdeel = false;
+        dagEnable = true;
+        weekEnable = true;
+        maandEnable = true;
         itemSelected = "leeg";
 
         super.onCreate(savedInstanceState);
@@ -229,12 +235,30 @@ public class InvoerActivity extends AppCompatActivity implements AdapterView.OnI
                 break;
             case R.id.dagCheck:
                 dagelijks = !dagelijks;
+                weekEnable = !weekEnable;
+                maandEnable = !maandEnable;
+                CheckBox wdCheck = (CheckBox) findViewById(R.id.weekCheck);
+                wdCheck.setEnabled(weekEnable);
+                CheckBox mdCheck = (CheckBox) findViewById(R.id.maandCheck);
+                mdCheck.setEnabled(maandEnable);
                 break;
             case R.id.weekCheck:
                 wekelijks = !wekelijks;
+                maandEnable = !maandEnable;
+                dagEnable = !dagEnable;
+                CheckBox mwCheck = (CheckBox) findViewById(R.id.maandCheck);
+                mwCheck.setEnabled(maandEnable);
+                CheckBox dwCheck = (CheckBox) findViewById(R.id.dagCheck);
+                dwCheck.setEnabled(dagEnable);
                 break;
             case R.id.maandCheck:
                 maandelijks = !maandelijks;
+                dagEnable = !dagEnable;
+                weekEnable = !weekEnable;
+                CheckBox dmCheck = (CheckBox) findViewById(R.id.dagCheck);
+                dmCheck.setEnabled(dagEnable);
+                CheckBox wmCheck = (CheckBox) findViewById(R.id.weekCheck);
+                wmCheck.setEnabled(weekEnable);
                 break;
         }
     }
