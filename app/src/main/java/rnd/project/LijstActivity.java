@@ -99,6 +99,12 @@ public class LijstActivity extends AppCompatActivity {
 
 
     }
+
+    private int parseId(String str) {
+        String[] strr = str.split(" ");
+        int id = Integer.parseInt(strr[strr.length-1]);
+        return id;
+    }
     private void toastMessage (String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
