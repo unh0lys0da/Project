@@ -149,10 +149,10 @@ public class InvoerActivity extends AppCompatActivity implements AdapterView.OnI
                 // Voer de data in in de database:
                 boolean insert = db.addAmount(bedrag, uitin, itemSelected, jaar, maand, dag);
                 if (insert) {
-                    toastMessage("Bedrag toegevoegd");
                     if(herhaald) {
                         repeatInUit(bedrag,uitin, itemSelected, jaar, maand, dag);
                     }
+                    toastMessage("Bedrag toegevoegd");
                 }
                 else toastMessage("Er ging iets mis met het toevoegen van het bedrag");
             }
@@ -162,6 +162,9 @@ public class InvoerActivity extends AppCompatActivity implements AdapterView.OnI
 
     private void repeatInUit(double bedrag, String uitin, String item, int jaar, int maand, int dag) {
         GregorianCalendar calendar = new GregorianCalendar();
+        calendar.set(Calendar.YEAR, jaar);
+        calendar.set(Calendar.MONTH, maand);
+        calendar.set(Calendar.DAY_OF_MONTH, dag);
         if(dagelijks)
             while (calendar.get(Calendar.YEAR) < jaar + 2) {
                 calendar.add(Calendar.DAY_OF_YEAR,1);
@@ -173,6 +176,9 @@ public class InvoerActivity extends AppCompatActivity implements AdapterView.OnI
                 }
             }
         calendar = new GregorianCalendar();
+        calendar.set(Calendar.YEAR, jaar);
+        calendar.set(Calendar.MONTH, maand);
+        calendar.set(Calendar.DAY_OF_MONTH, dag);
         if(wekelijks)
             while (calendar.get(Calendar.YEAR) < jaar + 2) {
                 calendar.add(Calendar.DAY_OF_YEAR,7);
@@ -224,8 +230,11 @@ public class InvoerActivity extends AppCompatActivity implements AdapterView.OnI
             case R.id.dagCheck:
                 dagelijks = !dagelijks;
                 break;
-            case R.id.maandCheck:
+            case R.id.weekCheck:
                 wekelijks = !wekelijks;
+                break;
+            case R.id.maandCheck:
+                maandelijks = !maandelijks;
                 break;
             case R.id.opdeelCheck:
                 opdeel = !opdeel;

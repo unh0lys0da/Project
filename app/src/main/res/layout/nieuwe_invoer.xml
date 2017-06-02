@@ -110,15 +110,6 @@
         android:layout_below="@+id/opdeelCheck"
         android:layout_alignStart="@+id/opdeelCheck"
         android:onClick="onCheckBoxClicked"/>
-    <CheckBox
-        android:id="@+id/dagCheck"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Dag"
-        android:layout_alignBaseline="@+id/elkeText"
-        android:layout_alignBottom="@+id/elkeText"
-        android:layout_toEndOf="@+id/herhaaldCheck"
-        android:onClick="onCheckBoxClicked"/>
     <TextView
         android:id="@+id/elkeText"
         android:layout_width="wrap_content"
@@ -130,6 +121,15 @@
         android:layout_alignStart="@+id/herhaaldCheck"
         android:layout_marginStart="7dp"
         android:layout_marginTop="18dp"
+        android:onClick="onCheckBoxClicked"/>
+    <CheckBox
+        android:id="@+id/dagCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Dag"
+        android:layout_alignBaseline="@+id/elkeText"
+        android:layout_alignBottom="@+id/elkeText"
+        android:layout_toEndOf="@+id/herhaaldCheck"
         android:onClick="onCheckBoxClicked"/>
     <CheckBox
         android:id="@+id/weekCheck"
