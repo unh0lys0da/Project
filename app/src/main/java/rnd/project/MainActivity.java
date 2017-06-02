@@ -622,8 +622,8 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
     }
 
     public double calculateBudget() {
-        Cursor positive = db.getUitIn("in");
-        Cursor negative = db.getUitIn("uit");
+        Cursor positive = db.getTotal("in");
+        Cursor negative = db.getTotal("uit");
         double totalIn;
         double totalUit;
         positive.moveToPosition(0);

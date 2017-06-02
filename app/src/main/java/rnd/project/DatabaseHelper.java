@@ -162,6 +162,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return data;
     }
 
+    public Cursor getTotal(String uitIn) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT sum(" +
+                COLUMN_1_BEDRAG + ")" + " FROM " +
+                TABLE_NAME + " WHERE " +
+                COLUMN_2_UITOFIN + " = \"" + uitIn + "\" GROUP BY " +
+                COLUMN_2_UITOFIN;
+        Cursor data = db.rawQuery(query, null);
+
+        return data;
+    }
+
     public Cursor getUitInMonthYear(String uitIn, int month, int year) {
         // Wat returnt deze precies? #aandacht
         SQLiteDatabase db = this.getReadableDatabase();
@@ -260,6 +272,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void deleteEntry(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM " +  TABLE_NAME +  " WHERE " + COLUMN_0_ID +  "= '" + id + "'");
+        db.execSQL("DELETE FROM " +  TABLE_NAME +  " WHERE " + COLUMN_0_ID +  "= " + id );
     }
 }
