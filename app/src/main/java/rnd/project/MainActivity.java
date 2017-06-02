@@ -361,7 +361,7 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
          */
 
         //kijkt op welke maand de spinner (en dus de lijst) staat
-        String string = (String) spinner.getItemAtPosition(0);
+        String string = (String) spinner.getSelectedItem();
         MonthYear my = new MonthYear(0,0);
         parseMonthYearFromString(my, string);
         int year = my.getYear();

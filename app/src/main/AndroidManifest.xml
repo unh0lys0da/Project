@@ -19,6 +19,8 @@
         <activity android:name=".SettingsActivity"></activity>
         <activity android:name=".CategoryActivity"></activity>
         <activity android:name=".LijstActivity"></activity>
+        <activity android:name=".MaandBewerkenActivity"></activity>
+
     </application>
 
 </manifest>
