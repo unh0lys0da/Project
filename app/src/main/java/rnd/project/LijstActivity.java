@@ -74,9 +74,9 @@ public class LijstActivity extends AppCompatActivity {
          */
         Cursor res = db.getInUitAndDay(month, year);
         String[] inUitArray = new String[res.getCount()];
-        for(int i=0; res.moveToNext(); i++) {
+        for(int i=0, j = 0; res.moveToNext(); i++, j++) {
             String inuit = res.getString(1).equals("in") ? "+" : "-";
-            String row = inuit + res.getString(0) + "\t" + res.getString(2) + "\t" + res.getInt(3) + "-" + month + "-" + year;
+            String row = inuit + res.getString(0) + "\t" + res.getString(2) + "\t" + res.getInt(3) + "-" + month + "-" + year + " ID: " + res.getInt(4);
             inUitArray[i] = row;
         }
         ArrayAdapter<String> listArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, inUitArray);
@@ -85,15 +85,14 @@ public class LijstActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                /*
-                    String str = (String) adapterView.getItemAtPosition(position);
-                    int id = parseItemId(str); <-- moet nog geschreven worden
-                    db.removeById(id); <-- die ook
-                 */
 
-                String longstring = Long.toString(l);
-                toastMessage(longstring);
-                db.deleteEntry(l);
+
+
+                    String str = (String) adapterView.getItemAtPosition(position);
+                    String id = str.substring(str.length()-1);
+                    db.deleteEntry(id);
+
+
             }
         });
 

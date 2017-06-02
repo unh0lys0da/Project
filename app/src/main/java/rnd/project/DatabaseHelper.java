@@ -202,7 +202,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_1_BEDRAG + " , " +
                 COLUMN_2_UITOFIN + " , " +
                 COLUMN_3_CATEGORIE + " , " +
-                COLUMN_6_DAG + " FROM " +
+                COLUMN_6_DAG +  " , " +
+                COLUMN_0_ID + " FROM " +
                 TABLE_NAME + " WHERE " +
                 COLUMN_5_MAAND + " = " + month + " AND " +
                 COLUMN_4_JAAR + " = " + year + " AND " +
@@ -251,14 +252,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return data;
     }
 
+
     public boolean removeMonthYearFut(int maand, int jaar) {
         SQLiteDatabase db = this.getWritableDatabase();
         return (db.delete(TABLE_NAME_FUT, COLUMN_5_MAAND + "=" + maand + " AND " + COLUMN_4_JAAR + "=" + jaar, null) > 0);
     }
 
-    public void deleteEntry(long id) {
-        String string = String.valueOf(id);
+    public void deleteEntry(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM Bedragen WHERE ID = '" + string + "'");
+        db.execSQL("DELETE FROM " +  TABLE_NAME +  " WHERE " + COLUMN_0_ID +  "= '" + id + "'");
     }
 }
