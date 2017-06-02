@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
             makeSpinner(spinner, mndJaar);
 
             listView = (ListView) findViewById(R.id.list);
-            setupListView(listView);
+            setupListView(listView, 0);
             //OnClickListener voor gotoLijst functie
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> a, View v, int position, long id) {
@@ -298,8 +298,8 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         spinner.setOnItemSelectedListener(this);
     }
 
-    private void setupListView(ListView listView) {
-        String string = (String) spinner.getItemAtPosition(0);
+    private void setupListView(ListView listView, int pos) {
+        String string = (String) spinner.getItemAtPosition(pos);
         MonthYear my = new MonthYear(0,0);
         parseMonthYearFromString(my, string);
         int year = my.getYear();
@@ -563,6 +563,7 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         readUitInMonthYear("uit", bedragListUitgave, categorieListUitgave, my.getMonth(), my.getYear());
         fillCharts2(true);
 
+        setupListView(listView, position);
     }
 
     // Deze methode maakt parseerd jaar en maand uit een string met format "<maand> yyyy" en set MonthYear my daarna met de gevonden

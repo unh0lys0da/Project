@@ -84,7 +84,13 @@ public class LijstActivity extends AppCompatActivity {
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                /*
+                    String str = (String) adapterView.getItemAtPosition(position);
+                    int id = parseItemId(str); <-- moet nog geschreven worden
+                    db.removeById(id); <-- die ook
+                 */
+
                 String longstring = Long.toString(l);
                 toastMessage(longstring);
                 db.deleteEntry(l);
