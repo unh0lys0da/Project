@@ -12,6 +12,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "Bedragen.db";
     public static final String TABLE_NAME = "Bedragen";
     public static final String TABLE_NAME_CAT = "Categories";
+    public static final String TABLE_NAME_FUT = "Future";
 
     // Kolom namen:
     public static final String COLUMN_0_ID = "ID";
@@ -49,6 +50,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         " (ID INTEGER PRIMARY KEY AUTOINCREMENT," +
                         CAT_COLUMN_1_CATEGORIES + " TEXT)";
         db.execSQL(CREATE_TABLE);
+        CREATE_TABLE =
+                "CREATE TABLE " + TABLE_NAME_FUT +
+                        " (ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        COLUMN_1_BEDRAG + " REAL," +
+                        COLUMN_2_UITOFIN + " TEXT," +
+                        COLUMN_3_CATEGORIE + " TEXT," +
+                        COLUMN_4_JAAR + " INTEGER," +
+                        COLUMN_5_MAAND + " INTEGER," +
+                        COLUMN_6_DAG + " INTEGER)";
+        db.execSQL(CREATE_TABLE);
 
     }
 
@@ -83,6 +94,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (result == -1) return false; //Adding row failed
         else return true; //Adding row succeeded
     }
+    public boolean addAmountFut(double bedrag, String uitofin, String cat, int jaar, int maand, int dag) {
+
+        // Zet de database in write-modus
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // Vult de juiste gegevens in in de juiste kolom
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_1_BEDRAG, bedrag);
+        values.put(COLUMN_2_UITOFIN, uitofin);
+        values.put(COLUMN_3_CATEGORIE, cat);
+        values.put(COLUMN_4_JAAR, jaar);
+        values.put(COLUMN_5_MAAND, maand);
+        values.put(COLUMN_6_DAG, dag);
+
+        //  Zet de nieuwe rij in de database, en returnt de primary key waarde van de nieuwe rij (en -1 als het niet is gelukt)
+        long result = db.insert(TABLE_NAME_FUT, null, values);
+        if (result == -1) return false; //Adding row failed
+        else return true; //Adding row succeeded
+    }
+
 
     //Returnt cursor met alle kolommen voor de gegeven maand in jaar
     public Cursor getMaand(int month, int year) {

@@ -88,6 +88,8 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         // Dit wordt de lijst met in en uitgaven onderaan
         private ListView listView;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
