@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -33,6 +34,8 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -171,6 +174,9 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
             setUpCharts();
             // De volgende functie vult het staafdiagram:
             //setUpBarChart();
+
+            //De volgende functie berekent het huidige saldo:
+            saldo();
         }
     }
 
@@ -401,8 +407,8 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         fillCharts2(false);
 
     }
-
-   /* private void setUpBarChart() {
+/*
+    private void setUpBarChart() {
         // De staafdiagrammen gedefinieerd:
         barChart = (HorizontalBarChart) findViewById(R.id.barchart);
 
@@ -417,9 +423,9 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
 
         //DataSets toevoegen:
         fillCharts1(false);
-    }
+    }*/
 
-    private void fillCharts1(boolean setChanged) {
+   /* private void fillCharts1(boolean setChanged) {
         BarDataSet inkomstenDataSet = new BarDataSet(barListInkomst, "Inkomsten");
         BarData data = new BarData(inkomstenDataSet);
         barChart.setData(data);
@@ -427,7 +433,7 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
 
 
 
-    } */
+    }*/
 
     private void fillCharts2(boolean setChanged) {
 
@@ -576,4 +582,25 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         readUitInMonthYear("uit", bedragListInkomst, categorieListInkomst, month, year);
         fillCharts2(true);
     }
+
+     private void saldo() {
+        TextView saldoTextView = (TextView) findViewById(R.id.saldo);
+        String saldoString = Double.toString(calculateBudget());
+        saldoTextView.setText(saldoString);
+    }
+
+    public double calculateBudget() {
+        Cursor positive = db.getUitIn("in");
+        Cursor negative = db.getUitIn("uit");
+        positive.moveToFirst();
+        double totalIn = positive.getDouble(0);
+        negative.moveToFirst();
+        double totalUit = negative.getDouble(0);
+
+        double total = totalIn - totalUit;
+        return total;
+
+    }
+
+
 }
